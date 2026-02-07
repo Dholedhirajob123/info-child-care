@@ -6,6 +6,19 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { topics, TopicCategory, getCategoryColor } from '@/lib/topicsData';
 import { cn } from '@/lib/utils';
 
+// Category images
+import breastfeedingImg from '@/assets/topics/breastfeeding.jpg';
+import complementaryImg from '@/assets/topics/complementary.jpg';
+import hygieneImg from '@/assets/topics/hygiene.jpg';
+import nutritionImg from '@/assets/topics/nutrition.jpg';
+
+const categoryImages: Record<TopicCategory, string> = {
+  breastfeeding: breastfeedingImg,
+  complementary: complementaryImg,
+  hygiene: hygieneImg,
+  nutrition: nutritionImg,
+};
+
 const Topics = () => {
   const { t, language } = useLanguage();
   const navigate = useNavigate();
@@ -75,11 +88,12 @@ const Topics = () => {
               className="topic-card w-full bg-card rounded-xl p-4 flex items-center gap-4 text-left shadow-soft animate-slide-up"
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              <div className={cn(
-                'w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0',
-                getCategoryColor(topic.category)
-              )}>
-                {topic.emoji}
+              <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0">
+                <img 
+                  src={categoryImages[topic.category]} 
+                  alt={topic.title[language]}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-foreground mb-0.5">{topic.title[language]}</h3>
