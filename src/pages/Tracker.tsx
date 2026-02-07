@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Trash2, Edit2, Milk, Apple, Calendar, Clock, User, Scale, Ruler, Utensils } from 'lucide-react';
+import { Plus, Trash2, Edit2, Milk, Apple, Calendar, Clock, Utensils } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,17 +22,12 @@ interface FeedingEntry {
   notes?: string;
 }
 
-interface MonthlySummary {
-  weight?: string;
-  height?: string;
-  newFoods?: string;
-}
 
 const Tracker = () => {
   const { t, language } = useLanguage();
   const [babyAge, setBabyAge] = useState(0);
   const [entries, setEntries] = useState<FeedingEntry[]>([]);
-  const [monthlySummary, setMonthlySummary] = useState<MonthlySummary>({});
+  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<FeedingEntry | null>(null);
 
@@ -53,11 +48,10 @@ const Tracker = () => {
   useEffect(() => {
     const savedEntries = localStorage.getItem('feeding-entries');
     const savedAge = localStorage.getItem('baby-age');
-    const savedSummary = localStorage.getItem('monthly-summary');
     
     if (savedEntries) setEntries(JSON.parse(savedEntries));
     if (savedAge) setBabyAge(parseInt(savedAge));
-    if (savedSummary) setMonthlySummary(JSON.parse(savedSummary));
+    
   }, []);
 
   // Save to localStorage
@@ -69,9 +63,6 @@ const Tracker = () => {
     localStorage.setItem('baby-age', babyAge.toString());
   }, [babyAge]);
 
-  useEffect(() => {
-    localStorage.setItem('monthly-summary', JSON.stringify(monthlySummary));
-  }, [monthlySummary]);
 
   const getFeedingGuidance = () => {
     if (babyAge < 6) return t.breastMilkOnly;
@@ -309,43 +300,6 @@ const Tracker = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Monthly Summary */}
-      <div className="bg-card rounded-xl p-4 mb-4 shadow-soft">
-        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-          <Scale className="w-4 h-4" />
-          {t.monthlySummary}
-        </h3>
-        <div className="grid grid-cols-3 gap-3">
-          <div>
-            <Label className="text-xs">{t.weight}</Label>
-            <Input
-              type="number"
-              step="0.1"
-              value={monthlySummary.weight || ''}
-              onChange={(e) => setMonthlySummary({ ...monthlySummary, weight: e.target.value })}
-              className="bg-background text-sm h-9"
-            />
-          </div>
-          <div>
-            <Label className="text-xs">{t.height}</Label>
-            <Input
-              type="number"
-              step="0.1"
-              value={monthlySummary.height || ''}
-              onChange={(e) => setMonthlySummary({ ...monthlySummary, height: e.target.value })}
-              className="bg-background text-sm h-9"
-            />
-          </div>
-          <div>
-            <Label className="text-xs">{t.newFoodsTried}</Label>
-            <Input
-              value={monthlySummary.newFoods || ''}
-              onChange={(e) => setMonthlySummary({ ...monthlySummary, newFoods: e.target.value })}
-              className="bg-background text-sm h-9"
-            />
-          </div>
-        </div>
-      </div>
 
       {/* Feeding Log */}
       <h3 className="font-semibold text-foreground mb-3">{t.feedingLog}</h3>
