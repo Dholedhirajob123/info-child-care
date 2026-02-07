@@ -2,12 +2,22 @@ import { Syringe, Check, Info } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { vaccinationSchedule } from '@/lib/vaccinationData';
 import { cn } from '@/lib/utils';
+import vaccinationHeroImg from '@/assets/vaccination/vaccination-hero.jpg';
 
 const Vaccination = () => {
   const { t, language } = useLanguage();
 
   return (
     <div className="page-transition p-4">
+      {/* Hero Image */}
+      <div className="w-full h-40 rounded-2xl overflow-hidden mb-4 shadow-soft">
+        <img 
+          src={vaccinationHeroImg} 
+          alt="Vaccination" 
+          className="w-full h-full object-cover"
+        />
+      </div>
+
       <div className="flex items-center gap-3 mb-2">
         <Syringe className="w-6 h-6 text-primary" />
         <h1 className="text-title text-foreground">{t.vaccinationSchedule}</h1>
