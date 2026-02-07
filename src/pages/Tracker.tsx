@@ -309,49 +309,65 @@ const Tracker = () => {
           <p>{t.noEntries}</p>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {entries.map((entry) => (
             <div
               key={entry.id}
-              className="bg-card rounded-xl p-3 shadow-soft flex items-center gap-3"
+              className="bg-card rounded-xl p-4 shadow-soft"
             >
-              <div className={cn(
-                'w-10 h-10 rounded-lg flex items-center justify-center text-xl',
-                entry.feedingType === 'solid' ? 'bg-primary/10' : 'bg-accent/10'
-              )}>
-                {entry.feedingType === 'solid' ? '🥣' : '🍼'}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-foreground text-sm">{entry.foodName}</p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    {entry.date}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    {entry.time}
-                  </span>
-                  <span>{entry.quantity}{entry.unit}</span>
+              <div className="flex items-start gap-3">
+                <div className={cn(
+                  'w-12 h-12 rounded-lg flex items-center justify-center text-2xl shrink-0',
+                  entry.feedingType === 'solid' ? 'bg-primary/10' : 'bg-accent/10'
+                )}>
+                  {entry.feedingType === 'solid' ? '🥣' : '🍼'}
                 </div>
-              </div>
-              <div className="flex gap-1">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8"
-                  onClick={() => handleEdit(entry)}
-                >
-                  <Edit2 className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-destructive"
-                  onClick={() => handleDelete(entry.id)}
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="font-semibold text-foreground">{entry.babyName}</p>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+                      {entry.gender === 'male' ? '👦 ' + t.male : '👧 ' + t.female}
+                    </span>
+                  </div>
+                  <p className="text-sm text-primary font-medium">{entry.foodName}</p>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      {entry.date}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      {entry.time}
+                    </span>
+                    <span className="font-medium text-foreground">
+                      {entry.quantity} {entry.unit === 'ml' ? t.ml : t.spoons}
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-accent/10 text-accent">
+                      {entry.feedingType === 'breastmilk' ? t.breastMilk : entry.feedingType === 'formula' ? t.formula : t.solidFood}
+                    </span>
+                  </div>
+                  {entry.notes && (
+                    <p className="mt-2 text-xs text-muted-foreground italic">📝 {entry.notes}</p>
+                  )}
+                </div>
+                <div className="flex flex-col gap-1 shrink-0">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8"
+                    onClick={() => handleEdit(entry)}
+                  >
+                    <Edit2 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-destructive"
+                    onClick={() => handleDelete(entry.id)}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
