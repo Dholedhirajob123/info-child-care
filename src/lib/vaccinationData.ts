@@ -20,30 +20,30 @@ export const vaccinationSchedule: VaccinationMonth[] = [
     title: { en: 'At Birth', hi: 'जन्म के समय', mr: 'जन्माच्या वेळी' },
     emoji: '🍼',
     vaccines: [
-      { name: 'BCG', nameHi: 'बीसीजी', nameMr: 'बीसीजी' },
-      { name: 'OPV (Zero Dose)', nameHi: 'ओपीवी (शून्य डोज)', nameMr: 'ओपीव्ही (शून्य डोस)' },
-      { name: 'Hepatitis B (Birth Dose)', nameHi: 'हेपेटाइटिस बी (जन्म डोज)', nameMr: 'हिपॅटायटीस बी (जन्म डोस)' },
+      { name: 'BCG ( Single Dose )', nameHi: 'बीसीजी ( सिंगल डोस )', nameMr: 'बीसीजी ( सिंगल डोस )' },
+      { name: 'OPV ( Zero Dose )', nameHi: 'ओपीवी ( शून्य डोज )', nameMr: 'ओपीव्ही ( शून्य डोस )' },
+      { name: 'Hep B ( Birth Dose )', nameHi: 'हेपेटाइटिस बी ( जन्म डोज )', nameMr: 'हिपॅटायटीस बी ( जन्म डोस )' },
     ],
     purpose: {
-      en: 'Protects against tuberculosis, polio, and hepatitis B from birth',
+      en: 'Protects against tuberculosis, polio, and Hep B from birth',
       hi: 'जन्म से तपेदिक, पोलियो और हेपेटाइटिस बी से सुरक्षा',
       mr: 'जन्मापासून क्षयरोग, पोलिओ आणि हिपॅटायटीस बी पासून संरक्षण',
     },
   },
   {
-    month: 1.5,
+    month: 6,
     title: { en: '6 Weeks', hi: '6 सप्ताह', mr: '6 आठवडे' },
     emoji: '👶',
     vaccines: [
-      { name: 'DTaP + Hib + IPV + Hep B (1st)', nameHi: 'DTaP + Hib + IPV + Hep B (पहला)', nameMr: 'DTaP + Hib + IPV + Hep B (पहिला)' },
-      { name: 'or DTwP + Hib + Hep B + OPV (1st)', nameHi: 'या DTwP + Hib + Hep B + OPV (पहला)', nameMr: 'किंवा DTwP + Hib + Hep B + OPV (पहिला)' },
-      { name: 'PCV - Pneumococcal Conjugate (1st)', nameHi: 'पीसीवी - न्यूमोकोकल (पहला)', nameMr: 'पीसीव्ही - न्यूमोकोकल (पहिला)' },
-      { name: 'Rotavirus / Rotarix (1st)', nameHi: 'रोटावायरस (पहला)', nameMr: 'रोटाव्हायरस (पहिला)' },
+      { name: '( DTaP + Hib + IPV ) + Hep B ( 1st )', nameHi: '( DTaP + Hib + IPV ) + Hep B ( पहला )', nameMr: '( DTaP + Hib + IPV ) + Hep B ( पहिला )' },
+      { name: ' (  DTwP + Hib + Hep B  ) + OPV ( 1st )', nameHi: 'या ( ( DTwP + Hib + Hep B ) ) + OPV ( पहला )', nameMr: 'किंवा ( ( DTwP + Hib + Hep B ) ) ( पहिला )' },
+      { name: 'PCV - ( ( Pneumococcal Conjugate ) ) ( 1st )', nameHi: 'पीसीवी - ( न्यूमोकोकल ) ( पहला )', nameMr: 'पीसीव्ही - ( न्यूमोकोकल ) ( पहिला )' },
+      { name: 'Rotavirus ( Rotarix )  ( 1st )', nameHi: '	रोटावायरस ( रोटारिक्स )  ( पहला )', nameMr: 'रोटाव्हायरस ( रोटारिक्स ) (पहिला)' },
     ],
     purpose: {
-      en: 'Builds early immunity against diphtheria, tetanus, pertussis, Hib, polio, hepatitis B, pneumonia, and rotavirus',
-      hi: 'डिप्थीरिया, टेटनस, पर्टुसिस, हिब, पोलियो, हेपेटाइटिस बी, निमोनिया और रोटावायरस के खिलाफ प्रारंभिक प्रतिरक्षा',
-      mr: 'डिप्थीरिया, टिटॅनस, पर्टुसिस, हिब, पोलिओ, हिपॅटायटीस बी, न्यूमोनिया आणि रोटाव्हायरस विरुद्ध लवकर प्रतिकारशक्ती',
+      en: 'Builds early immunity against diphtheria, tetanus, pertussis, Hib, polio, Hep B, pneumonia, and rotavirus',
+      hi: 'डिप्थीरिया, टेटनस, पर्टुसिस, हिब, पोलियो, हेपेटाइटिस बी, निमोनिया और रोटावायरस ( रोटारिक्स ) के खिलाफ प्रारंभिक प्रतिरक्षा',
+      mr: 'डिप्थीरिया, टिटॅनस, पर्टुसिस, हिब, पोलिओ, हिपॅटायटीस बी, न्यूमोनिया आणि रोटाव्हायरस ( रोटारिक्स ) विरुद्ध लवकर प्रतिकारशक्ती',
     },
   },
   {
@@ -51,10 +51,10 @@ export const vaccinationSchedule: VaccinationMonth[] = [
     title: { en: '10 Weeks', hi: '10 सप्ताह', mr: '10 आठवडे' },
     emoji: '👶',
     vaccines: [
-      { name: 'DTaP + Hib + IPV + Hep B (2nd)', nameHi: 'DTaP + Hib + IPV + Hep B (दूसरा)', nameMr: 'DTaP + Hib + IPV + Hep B (दुसरा)' },
-      { name: 'or DTwP + Hib + Hep B + OPV (2nd)', nameHi: 'या DTwP + Hib + Hep B + OPV (दूसरा)', nameMr: 'किंवा DTwP + Hib + Hep B + OPV (दुसरा)' },
-      { name: 'PCV - Pneumococcal Conjugate (2nd)', nameHi: 'पीसीवी - न्यूमोकोकल (दूसरा)', nameMr: 'पीसीव्ही - न्यूमोकोकल (दुसरा)' },
-      { name: 'Rotavirus / Rotarix (2nd)', nameHi: 'रोटावायरस (दूसरा)', nameMr: 'रोटाव्हायरस (दुसरा)' },
+      { name: '( DTaP + Hib + IPV ) + Hep B  ( 2nd )', nameHi: '( DTaP + Hib + IPV ) + Hep B  ( दूसरा )', nameMr: '( DTaP + Hib + IPV ) + Hep B  (दुसरा)' },
+      { name: '( DTwP + Hib + Hep B ) OPV ( 2nd )', nameHi: 'या ( DTwP + Hib + Hep B ) OPV ( दूसरा )', nameMr: 'किंवा ( DTwP + Hib + Hep B ) + OPV (दुसरा)' },
+      { name: 'PCV - ( Pneumococcal Conjugate ) ( 2nd )', nameHi: 'पीसीवी ( न्यूमोकोकल कॉन्जुगेट ) ( दूसरा )', nameMr: 'पीसीव्ही ( न्युमोकोकल कॉन्जुगेट ) (दुसरा)' },
+      { name: 'Rotavirus ( Rotarix ) ( 2nd )', nameHi: 'रोटावायरस ( रोटारिक्स ) ( दूसरा )', nameMr: 'रोटाव्हायरस ( रोटारिक्स ) (दुसरा)' },
     ],
     purpose: {
       en: 'Strengthens protection started at 6 weeks',
@@ -67,9 +67,9 @@ export const vaccinationSchedule: VaccinationMonth[] = [
     title: { en: '14 Weeks', hi: '14 सप्ताह', mr: '14 आठवडे' },
     emoji: '👶',
     vaccines: [
-      { name: 'DTaP + Hib + IPV + Hep B (3rd)', nameHi: 'DTaP + Hib + IPV + Hep B (तीसरा)', nameMr: 'DTaP + Hib + IPV + Hep B (तिसरा)' },
-      { name: 'or DTwP + Hib + Hep B + OPV (3rd)', nameHi: 'या DTwP + Hib + Hep B + OPV (तीसरा)', nameMr: 'किंवा DTwP + Hib + Hep B + OPV (तिसरा)' },
-      { name: 'PCV - Pneumococcal Conjugate (3rd)', nameHi: 'पीसीवी - न्यूमोकोकल (तीसरा)', nameMr: 'पीसीव्ही - न्यूमोकोकल (तिसरा)' },
+      { name: '( DTaP + Hib + IPV ) + Hep B ( 3rd )', nameHi: '( DTaP + Hib + IPV ) + Hep B ( तीसरा )', nameMr: '( DTaP + Hib + IPV ) + Hep B ( तिसरा )' },
+      { name: '( DTwP + Hib + Hep B ) + OPV ( 3rd )', nameHi: 'या ( DTwP + Hib + Hep B ) + OPV ( तीसरा )', nameMr: 'किंवा ( DTwP + Hib + Hep B ) + OPV ( तिसरा )' },
+      { name: 'PCV - ( Pneumococcal Conjugate ) ( 3rd )', nameHi: 'पीसीवी ( न्यूमोकोकल कॉन्जुगेट ) ( तीसरा )', nameMr: 'पीसीव्ही ( न्युमोकोकल कॉन्जुगेट ) ( तिसरा )' },
     ],
     purpose: {
       en: 'Completes primary vaccination series for multiple diseases',
@@ -96,10 +96,10 @@ export const vaccinationSchedule: VaccinationMonth[] = [
     title: { en: '12 Months', hi: '12 महीने', mr: '12 महिने' },
     emoji: '🎉',
     vaccines: [
-      { name: 'Hepatitis A (1st)', nameHi: 'हेपेटाइटिस ए (पहला)', nameMr: 'हिपॅटायटीस ए (पहिला)' },
+      { name: 'Hep A ( 1st )', nameHi: 'हेपेटाइटिस ए ( पहला )', nameMr: 'हिपॅटायटीस ए ( पहिला )' },
     ],
     purpose: {
-      en: 'Protects against hepatitis A infection',
+      en: 'Protects against Hep A infection',
       hi: 'हेपेटाइटिस ए संक्रमण से बचाता है',
       mr: 'हिपॅटायटीस ए संक्रमणापासून संरक्षण',
     },
@@ -109,9 +109,9 @@ export const vaccinationSchedule: VaccinationMonth[] = [
     title: { en: '15 Months', hi: '15 महीने', mr: '15 महिने' },
     emoji: '🎂',
     vaccines: [
-      { name: 'MMR - Measles + Mumps + Rubella (1st)', nameHi: 'एमएमआर - खसरा + मम्प्स + रूबेला (पहला)', nameMr: 'एमएमआर - गोवर + गालगुंड + रुबेला (पहिला)' },
-      { name: 'Varicella / Chicken Pox (1st)', nameHi: 'वैरिसेला / चिकन पॉक्स (पहला)', nameMr: 'व्हॅरिसेला / कांजिण्या (पहिला)' },
-      { name: 'PCV - Pneumococcal Conjugate (Booster)', nameHi: 'पीसीवी - न्यूमोकोकल (बूस्टर)', nameMr: 'पीसीव्ही - न्यूमोकोकल (बूस्टर)' },
+      { name: 'MMR - ( Measles + Mumps + Rubella ) ( 1st)', nameHi: 'एमएमआर - ( खसरा + मम्प्स + रूबेला ) ( पहला )', nameMr: 'एमएमआर - गोवर + गालगुंड + रुबेला ( पहिला )' },
+      { name: 'Varicella ( Chicken Pox )  ( 1st )', nameHi: 'वैरिसेला ( चिकन पॉक्स ) ( पहला )', nameMr: 'व्हॅरिसेला ( कांजिण्या ) ( पहिला )' },
+      { name: 'PCV - ( Pneumococcal Congugate ) ( Booster )', nameHi: 'पीसीवी ( न्यूमोकोकल कॉन्जुगेट ) ( बूस्टर )', nameMr: 'पीसीव्ही ( न्युमोकोकल कॉन्जुगेट ) ( बूस्टर )' },
     ],
     purpose: {
       en: 'Provides long-term protection against measles, mumps, rubella, chicken pox, and pneumonia',
@@ -124,8 +124,8 @@ export const vaccinationSchedule: VaccinationMonth[] = [
     title: { en: '16-18 Months', hi: '16-18 महीने', mr: '16-18 महिने' },
     emoji: '💪',
     vaccines: [
-      { name: 'DTaP + Hib + IPV (1st Booster)', nameHi: 'DTaP + Hib + IPV (पहला बूस्टर)', nameMr: 'DTaP + Hib + IPV (पहिला बूस्टर)' },
-      { name: 'or DTwP + Hib + OPV (1st Booster)', nameHi: 'या DTwP + Hib + OPV (पहला बूस्टर)', nameMr: 'किंवा DTwP + Hib + OPV (पहिला बूस्टर)' },
+      { name: 'DTaP + Hib + IPV ( 1st Booster )', nameHi: 'DTaP + Hib + IPV ( पहला बूस्टर) ', nameMr: 'DTaP + Hib + IPV ( पहिला बूस्टर )' },
+      { name: '( DTwP + Hib ) + OPV ( 1st Booster )', nameHi: 'या ( DTwP + Hib ) + OPV ( पहला बूस्टर )', nameMr: 'किंवा ( DTwP + Hib ) + OPV ( पहिला बूस्टर )' },
     ],
     purpose: {
       en: 'Booster dose to strengthen immunity against diphtheria, tetanus, pertussis, Hib, and polio',
@@ -138,10 +138,10 @@ export const vaccinationSchedule: VaccinationMonth[] = [
     title: { en: '18 Months', hi: '18 महीने', mr: '18 महिने' },
     emoji: '🌟',
     vaccines: [
-      { name: 'Hepatitis A (2nd)', nameHi: 'हेपेटाइटिस ए (दूसरा)', nameMr: 'हिपॅटायटीस ए (दुसरा)' },
+      { name: 'Hep A ( 2nd )', nameHi: 'हेपेटाइटिस ए ( दूसरा )', nameMr: 'हिपॅटायटीस ए ( दुसरा )' },
     ],
     purpose: {
-      en: 'Completes hepatitis A protection',
+      en: 'Completes Hep A protection',
       hi: 'हेपेटाइटिस ए सुरक्षा पूरी करता है',
       mr: 'हिपॅटायटीस ए संरक्षण पूर्ण करते',
     },
@@ -151,7 +151,7 @@ export const vaccinationSchedule: VaccinationMonth[] = [
     title: { en: '2 Years', hi: '2 वर्ष', mr: '2 वर्षे' },
     emoji: '🎈',
     vaccines: [
-      { name: 'Typhoid (1st)', nameHi: 'टायफाइड (पहला)', nameMr: 'टायफॉइड (पहिला)' },
+      { name: 'Typhoid ( 1st )', nameHi: 'टायफाइड ( पहला )', nameMr: 'टायफॉइड ( पहिला )' },
     ],
     purpose: {
       en: 'Protects against typhoid fever',
@@ -164,8 +164,8 @@ export const vaccinationSchedule: VaccinationMonth[] = [
     title: { en: '4½ - 5 Years', hi: '4½ - 5 वर्ष', mr: '4½ - 5 वर्षे' },
     emoji: '🏫',
     vaccines: [
-      { name: 'DTaP / DTwP / OPV (2nd Booster)', nameHi: 'DTaP / DTwP / OPV (दूसरा बूस्टर)', nameMr: 'DTaP / DTwP / OPV (दुसरा बूस्टर)' },
-      { name: 'MMR (2nd Booster)', nameHi: 'एमएमआर (दूसरा बूस्टर)', nameMr: 'एमएमआर (दुसरा बूस्टर)' },
+      { name: 'DTaP / DTwP / OPV ( 2nd Booster )', nameHi: 'DTaP / DTwP / OPV ( दूसरा बूस्टर )', nameMr: 'DTaP / DTwP / OPV ( दुसरा बूस्टर )' },
+      { name: 'MMR ( 2nd Booster )', nameHi: 'एमएमआर ( दूसरा बूस्टर )', nameMr: 'एमएमआर ( दुसरा बूस्टर )' },
     ],
     purpose: {
       en: 'Pre-school booster for long-lasting immunity before starting school',

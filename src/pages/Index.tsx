@@ -23,8 +23,12 @@ const Index = () => {
             {t.welcome}
           </h1>
           
-          <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto">
+          <p className="text-lg text-muted-foreground mb-4 max-w-md mx-auto">
             {t.welcomeSubtitle}
+          </p>
+
+          <p className="text-lg text-foreground font-semibold mb-4 max-w-md mx-auto">
+            {t.Presentedby}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

@@ -8,23 +8,18 @@ const Vaccination = () => {
   const { t, language } = useLanguage();
 
   return (
-    <div className="page-transition p-4">
-      {/* Hero Image */}
-      <div className="w-full h-40 rounded-2xl overflow-hidden mb-4 shadow-soft">
-        <img 
-          src={vaccinationHeroImg} 
-          alt="Vaccination" 
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <div 
+      className="page-transition p-4 min-h-screen bg-cover bg-center bg-fixed"
+      style={{ backgroundImage: `url(${vaccinationHeroImg})` }}
+    >
+      <div className="rounded-xl p-4 backdrop-blur-sm">
+        <div className="flex items-center gap-3 mb-2">
+          <Syringe className="w-6 h-6 text-primary" />
+          <h1 className="text-title text-foreground">{t.vaccinationSchedule}</h1>
+        </div>
+        <p className="text-muted-foreground mb-6">{t.vaccinationSubtitle}</p>
 
-      <div className="flex items-center gap-3 mb-2">
-        <Syringe className="w-6 h-6 text-primary" />
-        <h1 className="text-title text-foreground">{t.vaccinationSchedule}</h1>
-      </div>
-      <p className="text-muted-foreground mb-6">{t.vaccinationSubtitle}</p>
-
-      <div className="space-y-4">
+        <div className="space-y-4">
         {vaccinationSchedule.map((month, index) => (
           <div
             key={month.month}
@@ -67,7 +62,7 @@ const Vaccination = () => {
             ) : null}
 
             {/* Purpose */}
-            <div className={cn(
+            {/* <div className={cn(
               'p-3 rounded-lg',
               month.vaccines.length > 0 ? 'bg-secondary/50' : 'bg-accent/10'
             )}>
@@ -75,7 +70,7 @@ const Vaccination = () => {
                 <span className="font-medium">{month.vaccines.length > 0 ? t.purpose : t.careNote}: </span>
                 {month.vaccines.length > 0 ? month.purpose[language] : month.careNote?.[language] || month.purpose[language]}
               </p>
-            </div>
+            </div> */}
 
             {/* Care Note (if both vaccine and care note exist) */}
             {month.vaccines.length > 0 && month.careNote && (
@@ -88,18 +83,19 @@ const Vaccination = () => {
             )}
           </div>
         ))}
-      </div>
+        </div>
 
-      {/* Footer Note */}
-      <div className="mt-6 p-4 bg-secondary/30 rounded-xl text-center">
-        <p className="text-sm text-muted-foreground">
-          📌 {language === 'en' 
-            ? 'Always consult your pediatrician for the latest vaccination schedule'
-            : language === 'hi'
-            ? 'नवीनतम टीकाकरण अनुसूची के लिए हमेशा अपने बाल रोग विशेषज्ञ से परामर्श करें'
-            : 'नवीनतम लसीकरण वेळापत्रकासाठी नेहमी आपल्या बालरोगतज्ञांचा सल्ला घ्या'
-          }
-        </p>
+        {/* Footer Note */}
+        <div className="mt-6 p-4 bg-secondary/30 rounded-xl text-center">
+          <p className="text-sm text-muted-foreground">
+            📌 {language === 'en' 
+              ? 'Always consult your pediatrician for the latest vaccination schedule'
+              : language === 'hi'
+              ? 'नवीनतम टीकाकरण अनुसूची के लिए हमेशा अपने बाल रोग विशेषज्ञ से परामर्श करें'
+              : 'नवीनतम लसीकरण वेळापत्रकासाठी नेहमी आपल्या बालरोगतज्ञांचा सल्ला घ्या'
+            }
+          </p>
+        </div>
       </div>
     </div>
   );

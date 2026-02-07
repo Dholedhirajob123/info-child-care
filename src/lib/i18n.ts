@@ -29,6 +29,7 @@ export interface TranslationKeys {
   evidenceBased: string;
   evidenceBasedDesc: string;
   supportedBy: string;
+  Presentedby: string;
   
   // Topics
   searchTopics: string;
@@ -131,6 +132,7 @@ export const translations: Record<Language, TranslationKeys> = {
     
     welcome: 'Welcome to Info Child',
     welcomeSubtitle: 'Your trusted guide for scientific child nutrition and baby care',
+    Presentedby: 'Shital N Nawghare',
     exploreTopics: 'Explore Topics',
     installApp: 'Install App',
     keyBenefits: 'Key Benefits',
@@ -237,6 +239,7 @@ export const translations: Record<Language, TranslationKeys> = {
     
     welcome: 'इन्फो चाइल्ड में आपका स्वागत है',
     welcomeSubtitle: 'वैज्ञानिक बाल पोषण और शिशु देखभाल के लिए आपका विश्वसनीय मार्गदर्शक',
+    Presentedby: 'शितल एन नवघरे',
     exploreTopics: 'विषय देखें',
     installApp: 'ऐप इंस्टॉल करें',
     keyBenefits: 'मुख्य लाभ',
@@ -343,6 +346,7 @@ export const translations: Record<Language, TranslationKeys> = {
     
     welcome: 'इन्फो चाइल्ड मध्ये आपले स्वागत आहे',
     welcomeSubtitle: 'शास्त्रीय बाल पोषण आणि बाळाच्या काळजीसाठी आपला विश्वासू मार्गदर्शक',
+    Presentedby: 'शितल एन नवघरे',
     exploreTopics: 'विषय पहा',
     installApp: 'अॅप इन्स्टॉल करा',
     keyBenefits: 'मुख्य फायदे',
