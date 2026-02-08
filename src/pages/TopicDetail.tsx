@@ -110,9 +110,29 @@ const TopicDetail = () => {
               </AccordionItem>
             ))}
           </Accordion>
+
+
+       <div className="p-4 pb-0 flex justify-center">
+  <Button
+    variant="ghost"
+    size="sm"
+    className="gap-1 text-muted-foreground hover:text-foreground"
+    onClick={() => navigate("/topics")}
+  >
+    <ArrowLeft className="w-4 h-4" />
+    {t.backToTopics}
+  </Button>
+</div>
+
+
         </div>
+
+
+
       )}
     </div>
+
+    
   );
 };
 

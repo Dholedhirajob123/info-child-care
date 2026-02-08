@@ -37,7 +37,7 @@ export const vaccinationSchedule: VaccinationMonth[] = [
     vaccines: [
       { name: '( DTaP + Hib + IPV ) + Hep B ( 1st )', nameHi: '( DTaP + Hib + IPV ) + Hep B ( पहला )', nameMr: '( DTaP + Hib + IPV ) + Hep B ( पहिला )' },
       { name: ' (  DTwP + Hib + Hep B  ) + OPV ( 1st )', nameHi: 'या ( ( DTwP + Hib + Hep B ) ) + OPV ( पहला )', nameMr: 'किंवा ( ( DTwP + Hib + Hep B ) ) ( पहिला )' },
-      { name: 'PCV - ( ( Pneumococcal Conjugate ) ) ( 1st )', nameHi: 'पीसीवी - ( न्यूमोकोकल ) ( पहला )', nameMr: 'पीसीव्ही - ( न्यूमोकोकल ) ( पहिला )' },
+      { name: 'PCV - ( Pneumococcal Conjugate ) ( 1st )', nameHi: 'पीसीवी - ( न्यूमोकोकल ) ( पहला )', nameMr: 'पीसीव्ही - ( न्यूमोकोकल ) ( पहिला )' },
       { name: 'Rotavirus ( Rotarix )  ( 1st )', nameHi: '	रोटावायरस ( रोटारिक्स )  ( पहला )', nameMr: 'रोटाव्हायरस ( रोटारिक्स ) (पहिला)' },
     ],
     purpose: {
