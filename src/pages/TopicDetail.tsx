@@ -10,25 +10,11 @@ import { cn } from '@/lib/utils';
 import month1 from '@/assets/lifecycle/month-1.jpg';
 import month2 from '@/assets/lifecycle/month-2.jpg';
 import month3 from '@/assets/lifecycle/month-3.jpg';
-import month4 from '@/assets/lifecycle/month-4.jpg';
-import month5 from '@/assets/lifecycle/month-5.jpg';
-import month6 from '@/assets/lifecycle/month-6.jpg';
-import month7 from '@/assets/lifecycle/month-7.jpg';
-import month8 from '@/assets/lifecycle/month-8.jpg';
-import month9 from '@/assets/lifecycle/month-9.jpg';
-import month10 from '@/assets/lifecycle/month-10.jpg';
 
 const lifecycleImages = [
   { month: 1, img: month1, en: 'Sleeping & feeding', hi: 'सोना और दूध पीना', mr: 'झोपणे आणि दूध पिणे' },
   { month: 2, img: month2, en: 'Head lifting & smiling', hi: 'सिर उठाना और मुस्कुराना', mr: 'डोके उचलणे आणि हसणे' },
   { month: 3, img: month3, en: 'Tummy time & cooing', hi: 'पेट के बल लेटना', mr: 'पोटावर झोपणे' },
-  { month: 4, img: month4, en: 'Reaching & grabbing', hi: 'पकड़ना सीखना', mr: 'पकडायला शिकणे' },
-  { month: 5, img: month5, en: 'Rolling over', hi: 'करवट लेना', mr: 'कूस बदलणे' },
-  { month: 6, img: month6, en: 'Sitting & first foods', hi: 'बैठना और पहला आहार', mr: 'बसणे आणि पहिला आहार' },
-  { month: 7, img: month7, en: 'Sitting independently', hi: 'अकेले बैठना', mr: 'एकट्याने बसणे' },
-  { month: 8, img: month8, en: 'Crawling', hi: 'रेंगना', mr: 'रांगणे' },
-  { month: 9, img: month9, en: 'Pulling to stand', hi: 'खड़ा होना', mr: 'उभे राहणे' },
-  { month: 10, img: month10, en: 'First steps', hi: 'पहले कदम', mr: 'पहिली पावले' },
 ];
 
 const TopicDetail = () => {

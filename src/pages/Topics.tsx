@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, ArrowRight, BookOpen } from 'lucide-react';
+import { Search, ArrowRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { topics, TopicCategory, getCategoryColor } from '@/lib/topicsData';
@@ -110,22 +110,6 @@ const Topics = () => {
           </div>
         )}
 
-        {/* Quiz Section */}
-        <div className="mt-8">
-          <button
-            onClick={() => navigate('/quiz')}
-            className="w-full bg-gradient-to-r from-primary to-accent rounded-xl p-5 flex items-center gap-4 text-left shadow-medium hover:shadow-lg transition-all"
-          >
-            <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center">
-              <BookOpen className="w-7 h-7 text-primary-foreground" />
-            </div>
-            <div className="flex-1">
-              <h3 className="font-bold text-primary-foreground text-lg">{t.quiz}</h3>
-              <p className="text-sm text-primary-foreground/80">{t.selectTopic}</p>
-            </div>
-            <ArrowRight className="w-6 h-6 text-primary-foreground" />
-          </button>
-        </div>
       </div>
     </div>
   );
