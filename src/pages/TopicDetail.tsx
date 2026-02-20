@@ -6,6 +6,31 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { topics, getCategoryColor } from '@/lib/topicsData';
 import { cn } from '@/lib/utils';
 
+// Baby lifecycle images
+import month1 from '@/assets/lifecycle/month-1.jpg';
+import month2 from '@/assets/lifecycle/month-2.jpg';
+import month3 from '@/assets/lifecycle/month-3.jpg';
+import month4 from '@/assets/lifecycle/month-4.jpg';
+import month5 from '@/assets/lifecycle/month-5.jpg';
+import month6 from '@/assets/lifecycle/month-6.jpg';
+import month7 from '@/assets/lifecycle/month-7.jpg';
+import month8 from '@/assets/lifecycle/month-8.jpg';
+import month9 from '@/assets/lifecycle/month-9.jpg';
+import month10 from '@/assets/lifecycle/month-10.jpg';
+
+const lifecycleImages = [
+  { month: 1, img: month1, en: 'Sleeping & feeding', hi: 'सोना और दूध पीना', mr: 'झोपणे आणि दूध पिणे' },
+  { month: 2, img: month2, en: 'Head lifting & smiling', hi: 'सिर उठाना और मुस्कुराना', mr: 'डोके उचलणे आणि हसणे' },
+  { month: 3, img: month3, en: 'Tummy time & cooing', hi: 'पेट के बल लेटना', mr: 'पोटावर झोपणे' },
+  { month: 4, img: month4, en: 'Reaching & grabbing', hi: 'पकड़ना सीखना', mr: 'पकडायला शिकणे' },
+  { month: 5, img: month5, en: 'Rolling over', hi: 'करवट लेना', mr: 'कूस बदलणे' },
+  { month: 6, img: month6, en: 'Sitting & first foods', hi: 'बैठना और पहला आहार', mr: 'बसणे आणि पहिला आहार' },
+  { month: 7, img: month7, en: 'Sitting independently', hi: 'अकेले बैठना', mr: 'एकट्याने बसणे' },
+  { month: 8, img: month8, en: 'Crawling', hi: 'रेंगना', mr: 'रांगणे' },
+  { month: 9, img: month9, en: 'Pulling to stand', hi: 'खड़ा होना', mr: 'उभे राहणे' },
+  { month: 10, img: month10, en: 'First steps', hi: 'पहले कदम', mr: 'पहिली पावले' },
+];
+
 const TopicDetail = () => {
   const { topicId } = useParams<{ topicId: string }>();
   const navigate = useNavigate();
@@ -94,6 +119,26 @@ const TopicDetail = () => {
         </div>
       </div>
 
+      {/* Baby Life Cycle */}
+      <div className="px-4 mb-6">
+        <h3 className="font-semibold text-foreground mb-3">
+          {language === 'en' ? '👶 Baby Growth: Month 1-10' : language === 'hi' ? '👶 शिशु विकास: महीना 1-10' : '👶 बाळाची वाढ: महिना 1-10'}
+        </h3>
+        <div className="flex gap-3 overflow-x-auto pb-3 -mx-4 px-4 scrollbar-hide">
+          {lifecycleImages.map((item) => (
+            <div key={item.month} className="flex-shrink-0 w-28">
+              <div className="w-28 h-28 rounded-xl overflow-hidden bg-card shadow-soft mb-2">
+                <img src={item.img} alt={`Month ${item.month}`} className="w-full h-full object-cover" />
+              </div>
+              <p className="text-xs font-semibold text-foreground text-center">
+                {language === 'en' ? `Month ${item.month}` : language === 'hi' ? `महीना ${item.month}` : `महिना ${item.month}`}
+              </p>
+              <p className="text-xs text-muted-foreground text-center leading-tight">{item[language]}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* FAQs */}
       {topic.faqs.length > 0 && (
         <div className="px-4 pb-8">
@@ -111,24 +156,18 @@ const TopicDetail = () => {
             ))}
           </Accordion>
 
-
-       <div className="p-4 pb-0 flex justify-center">
-  <Button
-    variant="ghost"
-    size="sm"
-    className="gap-1 text-muted-foreground hover:text-foreground"
-    onClick={() => navigate("/topics")}
-  >
-    <ArrowLeft className="w-4 h-4" />
-    {t.backToTopics}
-  </Button>
-</div>
-
-
+          <div className="p-4 pb-0 flex justify-center">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1 text-muted-foreground hover:text-foreground"
+              onClick={() => navigate("/topics")}
+            >
+              <ArrowLeft className="w-4 h-4" />
+              {t.backToTopics}
+            </Button>
+          </div>
         </div>
-
-
-
       )}
     </div>
 
