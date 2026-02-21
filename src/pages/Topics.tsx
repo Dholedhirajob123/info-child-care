@@ -17,6 +17,7 @@ const categoryImages: Record<TopicCategory, string> = {
   complementary: complementaryImg,
   hygiene: hygieneImg,
   nutrition: nutritionImg,
+  growth: hygieneImg,
 };
 
 const Topics = () => {

@@ -22,6 +22,7 @@ const Quiz = () => {
     { id: 'complementary', label: t.complementary, emoji: '🥣' },
     { id: 'hygiene', label: t.hygiene, emoji: '🛁' },
     { id: 'nutrition', label: t.nutrition, emoji: '🥗' },
+    { id: 'growth', label: 'Growth Monitoring', emoji: '📏' },
   ];
 
   const filteredQuestions = selectedCategory
@@ -105,17 +106,42 @@ const Quiz = () => {
   // Quiz Complete Screen
   if (quizComplete) {
     const percentage = Math.round((score / filteredQuestions.length) * 100);
+    const circumference = 2 * Math.PI * 54;
+    const strokeDashoffset = circumference - (percentage / 100) * circumference;
+    
     return (
       <div className="page-transition p-4 text-center">
         <div className="py-12">
-          <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
-            <Trophy className="w-12 h-12 text-primary" />
+          {/* Circular Score */}
+          <div className="relative w-36 h-36 mx-auto mb-6">
+            <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
+              <circle
+                cx="60" cy="60" r="54"
+                fill="none"
+                stroke="hsl(var(--secondary))"
+                strokeWidth="8"
+              />
+              <circle
+                cx="60" cy="60" r="54"
+                fill="none"
+                stroke="hsl(var(--primary))"
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={strokeDashoffset}
+                className="transition-all duration-1000 ease-out"
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-3xl font-bold text-primary">{percentage}%</span>
+              <span className="text-xs text-muted-foreground">{score}/{filteredQuestions.length}</span>
+            </div>
           </div>
+          
           <h2 className="text-title text-foreground mb-2">{t.yourScore}</h2>
-          <p className="text-4xl font-bold text-primary mb-2">
-            {score}/{filteredQuestions.length}
+          <p className="text-muted-foreground mb-8">
+            {percentage >= 80 ? '🌟 Excellent!' : percentage >= 50 ? '👍 Good effort!' : '📚 Keep learning!'}
           </p>
-          <p className="text-muted-foreground mb-8">{percentage}%</p>
 
           <div className="flex flex-col gap-3 max-w-xs mx-auto">
             <Button onClick={handleRestart} className="gap-2">

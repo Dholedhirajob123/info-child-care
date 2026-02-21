@@ -6,7 +6,7 @@ export interface QuizQuestion {
   options: Record<Language, string[]>;
   correctIndex: number;
   explanation: Record<Language, string>;
-  category: 'breastfeeding' | 'complementary' | 'hygiene' | 'nutrition';
+  category: 'breastfeeding' | 'complementary' | 'hygiene' | 'nutrition' | 'growth';
 }
 
 export const quizQuestions: QuizQuestion[] = [
@@ -249,5 +249,126 @@ export const quizQuestions: QuizQuestion[] = [
       mr: 'गंभीर प्रतिबंधात्मक रोगांपासून तुमच्या बाळाचे रक्षण करण्यासाठी लसीकरण अद्ययावत ठेवणे महत्त्वाचे आहे.',
     },
     category: 'hygiene',
+  },
+  // Growth Monitoring Questions
+  {
+    id: 'q13',
+    question: {
+      en: 'How often should you monitor your infant\'s height and weight?',
+      hi: 'आपको अपने शिशु की ऊंचाई और वजन की कितनी बार निगरानी करनी चाहिए?',
+      mr: 'तुम्ही तुमच्या बाळाची उंची आणि वजन किती वेळा तपासावे?',
+    },
+    options: {
+      en: ['Monthly', 'Once every 6 months', 'Once a year', 'Never'],
+      hi: ['मासिक', 'हर 6 महीने में', 'साल में एक बार', 'कभी नहीं'],
+      mr: ['मासिक', 'दर 6 महिन्यांनी', 'वर्षातून एकदा', 'कधीच नाही'],
+    },
+    correctIndex: 0,
+    explanation: {
+      en: 'Monthly monitoring of height and weight helps track your infant\'s growth pattern and detect any issues early.',
+      hi: 'ऊंचाई और वजन की मासिक निगरानी आपके शिशु के विकास पैटर्न को ट्रैक करने और किसी भी समस्या का जल्दी पता लगाने में मदद करती है।',
+      mr: 'उंची आणि वजनाचे मासिक निरीक्षण तुमच्या बाळाच्या वाढीचा ट्रॅक ठेवण्यास आणि कोणत्याही समस्या लवकर शोधण्यात मदत करते.',
+    },
+    category: 'growth',
+  },
+  {
+    id: 'q14',
+    question: {
+      en: 'Has your infant\'s growth been monitored regularly using a growth chart?',
+      hi: 'क्या आपके शिशु की वृद्धि की नियमित रूप से ग्रोथ चार्ट के माध्यम से निगरानी की गई है?',
+      mr: 'तुमच्या बाळाच्या वाढीचे ग्रोथ चार्ट वापरून नियमित निरीक्षण केले आहे का?',
+    },
+    options: {
+      en: ['Yes, regularly', 'Sometimes', 'Rarely', 'Never'],
+      hi: ['हाँ, नियमित रूप से', 'कभी-कभी', 'शायद ही कभी', 'कभी नहीं'],
+      mr: ['हो, नियमितपणे', 'कधीकधी', 'क्वचितच', 'कधीच नाही'],
+    },
+    correctIndex: 0,
+    explanation: {
+      en: 'Regular growth chart monitoring is essential to ensure your infant is growing at a healthy rate and to identify any growth delays early.',
+      hi: 'नियमित ग्रोथ चार्ट निगरानी यह सुनिश्चित करने के लिए आवश्यक है कि आपका शिशु स्वस्थ दर से बढ़ रहा है और किसी भी विकास देरी की पहचान जल्दी हो।',
+      mr: 'तुमचे बाळ निरोगी गतीने वाढत आहे याची खात्री करण्यासाठी आणि कोणत्याही वाढीच्या विलंबाची लवकर ओळख करण्यासाठी नियमित ग्रोथ चार्ट निरीक्षण आवश्यक आहे.',
+    },
+    category: 'growth',
+  },
+  {
+    id: 'q15',
+    question: {
+      en: 'Does your infant achieve developmental milestones appropriate for their age?',
+      hi: 'क्या आपका शिशु अपनी उम्र के अनुसार विकासात्मक मील के पत्थर हासिल करता है?',
+      mr: 'तुमचे बाळ त्यांच्या वयानुसार विकासात्मक टप्पे गाठते का?',
+    },
+    options: {
+      en: ['Yes, on track', 'Slightly delayed', 'Significantly delayed', 'Not sure'],
+      hi: ['हाँ, सही समय पर', 'थोड़ी देरी से', 'काफी देरी से', 'पता नहीं'],
+      mr: ['हो, वेळेवर', 'थोडा उशीरा', 'लक्षणीय उशीरा', 'माहीत नाही'],
+    },
+    correctIndex: 0,
+    explanation: {
+      en: 'Tracking developmental milestones helps ensure your baby is developing normally. If delays are noticed, early intervention can make a big difference.',
+      hi: 'विकासात्मक मील के पत्थर ट्रैक करने से यह सुनिश्चित करने में मदद मिलती है कि आपका बच्चा सामान्य रूप से विकसित हो रहा है।',
+      mr: 'विकासात्मक टप्पे ट्रॅक केल्याने तुमचे बाळ सामान्यपणे विकसित होत आहे याची खात्री होते.',
+    },
+    category: 'growth',
+  },
+  {
+    id: 'q16',
+    question: {
+      en: 'What was the ideal nutritional status for an infant during a health check-up?',
+      hi: 'स्वास्थ्य जांच के दौरान शिशु की आदर्श पोषण स्थिति क्या होनी चाहिए?',
+      mr: 'आरोग्य तपासणी दरम्यान बाळाची आदर्श पोषण स्थिती काय असावी?',
+    },
+    options: {
+      en: ['Normal weight for age', 'Mildly underweight', 'Moderately underweight', 'Severely underweight'],
+      hi: ['उम्र के अनुसार सामान्य वजन', 'हल्का कम वजन', 'मध्यम कम वजन', 'गंभीर रूप से कम वजन'],
+      mr: ['वयानुसार सामान्य वजन', 'किंचित कमी वजन', 'मध्यम कमी वजन', 'गंभीरपणे कमी वजन'],
+    },
+    correctIndex: 0,
+    explanation: {
+      en: 'Normal weight for age indicates proper nutrition and healthy growth. Regular monitoring helps maintain optimal nutritional status.',
+      hi: 'उम्र के अनुसार सामान्य वजन उचित पोषण और स्वस्थ विकास को दर्शाता है।',
+      mr: 'वयानुसार सामान्य वजन योग्य पोषण आणि निरोगी वाढ दर्शवते.',
+    },
+    category: 'growth',
+  },
+  {
+    id: 'q17',
+    question: {
+      en: 'How can you tell if your infant has growth delay or undernutrition?',
+      hi: 'आपको कैसे पता चलेगा कि आपके शिशु को विकास में देरी या कुपोषण है?',
+      mr: 'तुमच्या बाळाला वाढीत विलंब किंवा कुपोषण आहे हे कसे कळेल?',
+    },
+    options: {
+      en: ['Regular growth chart monitoring', 'Comparing with other babies', 'Guessing by appearance', 'No way to tell'],
+      hi: ['नियमित ग्रोथ चार्ट निगरानी', 'अन्य बच्चों से तुलना', 'दिखावट से अंदाजा', 'कोई तरीका नहीं'],
+      mr: ['नियमित ग्रोथ चार्ट निरीक्षण', 'इतर बाळांशी तुलना', 'दिसण्यावरून अंदाज', 'कोणताही मार्ग नाही'],
+    },
+    correctIndex: 0,
+    explanation: {
+      en: 'Growth chart monitoring is the most reliable way to detect growth delays. It tracks weight, height, and head circumference against standard benchmarks.',
+      hi: 'ग्रोथ चार्ट निगरानी विकास देरी का पता लगाने का सबसे विश्वसनीय तरीका है।',
+      mr: 'ग्रोथ चार्ट निरीक्षण वाढीतील विलंब शोधण्याचा सर्वात विश्वसनीय मार्ग आहे.',
+    },
+    category: 'growth',
+  },
+  {
+    id: 'q18',
+    question: {
+      en: 'How frequently should an infant visit a healthcare facility for growth monitoring?',
+      hi: 'शिशु को विकास निगरानी के लिए स्वास्थ्य सुविधा में कितनी बार जाना चाहिए?',
+      mr: 'वाढीच्या निरीक्षणासाठी बाळाने आरोग्य सुविधेला किती वेळा भेट द्यावी?',
+    },
+    options: {
+      en: ['Monthly', 'Every 3 months', 'Every 6 months', 'Once a year'],
+      hi: ['मासिक', 'हर 3 महीने', 'हर 6 महीने', 'साल में एक बार'],
+      mr: ['मासिक', 'दर 3 महिन्यांनी', 'दर 6 महिन्यांनी', 'वर्षातून एकदा'],
+    },
+    correctIndex: 0,
+    explanation: {
+      en: 'Monthly visits allow healthcare providers to track growth patterns and address any nutritional or developmental concerns promptly.',
+      hi: 'मासिक यात्राएं स्वास्थ्य प्रदाताओं को विकास पैटर्न ट्रैक करने और पोषण या विकासात्मक चिंताओं को तुरंत संबोधित करने में सक्षम बनाती हैं।',
+      mr: 'मासिक भेटी आरोग्य सेवा प्रदात्यांना वाढीचे नमुने ट्रॅक करण्यास आणि पोषण किंवा विकासात्मक चिंतांचे त्वरित निराकरण करण्यास सक्षम करतात.',
+    },
+    category: 'growth',
   },
 ];
