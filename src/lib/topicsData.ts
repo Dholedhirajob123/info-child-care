@@ -1,6 +1,6 @@
 import { Language } from './i18n';
 
-export type TopicCategory = 'breastfeeding' | 'complementary' | 'hygiene' | 'nutrition';
+export type TopicCategory = 'breastfeeding' | 'complementary' | 'hygiene' | 'nutrition' | 'growth';
 
 export interface FAQ {
   question: Record<Language, string>;
@@ -426,6 +426,7 @@ export const getCategoryColor = (category: TopicCategory): string => {
     complementary: 'category-complementary',
     hygiene: 'category-hygiene',
     nutrition: 'category-nutrition',
+    growth: 'category-hygiene',
   };
   return colors[category];
 };
