@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Activity, Syringe, Lightbulb } from 'lucide-react';
+import { Home, BookOpen, Activity, Syringe, Lightbulb, HelpCircle } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
@@ -12,6 +12,7 @@ export const BottomNavigation = () => {
     { path: '/topics', icon: BookOpen, label: t.topics },
     { path: '/tracker', icon: Activity, label: t.tracker },
     { path: '/vaccination', icon: Syringe, label: t.vaccination },
+    { path: '/quiz', icon: HelpCircle, label: t.quiz || 'Quiz' },
     { path: '/tips', icon: Lightbulb, label: t.tips },
   ];
 
