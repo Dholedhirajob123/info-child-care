@@ -1,44 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, CheckCircle2, XCircle, ArrowRight, RotateCcw, Trophy } from 'lucide-react';
+import { BookOpen, CheckCircle2, XCircle, ArrowRight, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { quizQuestions, QuizQuestion } from '@/lib/quizData';
-import { topics, TopicCategory } from '@/lib/topicsData';
+import { quizQuestions } from '@/lib/quizData';
 import { cn } from '@/lib/utils';
 
 const Quiz = () => {
   const { t, language } = useLanguage();
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState<TopicCategory | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [quizComplete, setQuizComplete] = useState(false);
 
-  const categories: { id: TopicCategory; label: string; emoji: string }[] = [
-    { id: 'breastfeeding', label: t.breastfeeding, emoji: '🤱' },
-    { id: 'complementary', label: t.complementary, emoji: '🥣' },
-    { id: 'hygiene', label: t.hygiene, emoji: '🛁' },
-    { id: 'nutrition', label: t.nutrition, emoji: '🥗' },
-    { id: 'growth', label: 'Growth Monitoring', emoji: '📏' },
-  ];
-
-  const filteredQuestions = selectedCategory
-    ? quizQuestions.filter((q) => q.category === selectedCategory)
-    : [];
-
-  const currentQuestion = filteredQuestions[currentQuestionIndex];
-
-  const handleCategorySelect = (category: TopicCategory) => {
-    setSelectedCategory(category);
-    setCurrentQuestionIndex(0);
-    setSelectedAnswer(null);
-    setShowResult(false);
-    setScore(0);
-    setQuizComplete(false);
-  };
+  const totalQuestions = quizQuestions.length;
+  const currentQuestion = quizQuestions[currentQuestionIndex];
 
   const handleAnswerSelect = (index: number) => {
     if (showResult) return;
@@ -50,7 +28,7 @@ const Quiz = () => {
   };
 
   const handleNext = () => {
-    if (currentQuestionIndex < filteredQuestions.length - 1) {
+    if (currentQuestionIndex < totalQuestions - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
       setShowResult(false);
@@ -60,7 +38,6 @@ const Quiz = () => {
   };
 
   const handleRestart = () => {
-    setSelectedCategory(null);
     setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
     setShowResult(false);
@@ -68,44 +45,9 @@ const Quiz = () => {
     setQuizComplete(false);
   };
 
-  // Category Selection Screen
-  if (!selectedCategory) {
-    return (
-      <div className="page-transition p-4">
-        <div className="flex items-center gap-3 mb-2">
-          <BookOpen className="w-6 h-6 text-primary" />
-          <h1 className="text-title text-foreground">{t.quiz}</h1>
-        </div>
-        <p className="text-muted-foreground mb-6">{t.selectTopic}</p>
-
-        <div className="grid gap-3">
-          {categories.map((category, index) => (
-            <button
-              key={category.id}
-              onClick={() => handleCategorySelect(category.id)}
-              className="bg-card rounded-xl p-4 flex items-center gap-4 shadow-soft hover:shadow-medium transition-all animate-slide-up"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-3xl">
-                {category.emoji}
-              </div>
-              <div className="flex-1 text-left">
-                <h3 className="font-semibold text-foreground">{category.label}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {quizQuestions.filter((q) => q.category === category.id).length} questions
-                </p>
-              </div>
-              <ArrowRight className="w-5 h-5 text-muted-foreground" />
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   // Quiz Complete Screen
   if (quizComplete) {
-    const percentage = Math.round((score / filteredQuestions.length) * 100);
+    const percentage = Math.round((score / totalQuestions) * 100);
     const circumference = 2 * Math.PI * 54;
     const strokeDashoffset = circumference - (percentage / 100) * circumference;
     
@@ -115,26 +57,14 @@ const Quiz = () => {
           {/* Circular Score */}
           <div className="relative w-36 h-36 mx-auto mb-6">
             <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
-              <circle
-                cx="60" cy="60" r="54"
-                fill="none"
-                stroke="hsl(var(--secondary))"
-                strokeWidth="8"
-              />
-              <circle
-                cx="60" cy="60" r="54"
-                fill="none"
-                stroke="hsl(var(--primary))"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray={circumference}
-                strokeDashoffset={strokeDashoffset}
-                className="transition-all duration-1000 ease-out"
-              />
+              <circle cx="60" cy="60" r="54" fill="none" stroke="hsl(var(--secondary))" strokeWidth="8" />
+              <circle cx="60" cy="60" r="54" fill="none" stroke="hsl(var(--primary))" strokeWidth="8"
+                strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={strokeDashoffset}
+                className="transition-all duration-1000 ease-out" />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span className="text-3xl font-bold text-primary">{percentage}%</span>
-              <span className="text-xs text-muted-foreground">{score}/{filteredQuestions.length}</span>
+              <span className="text-xs text-muted-foreground">{score}/{totalQuestions}</span>
             </div>
           </div>
           
@@ -162,14 +92,18 @@ const Quiz = () => {
     <div className="page-transition p-4">
       {/* Progress */}
       <div className="mb-6">
+        <div className="flex items-center gap-3 mb-3">
+          <BookOpen className="w-6 h-6 text-primary" />
+          <h1 className="text-title text-foreground">{t.quiz}</h1>
+        </div>
         <div className="flex justify-between text-sm text-muted-foreground mb-2">
-          <span>{t.question} {currentQuestionIndex + 1}/{filteredQuestions.length}</span>
+          <span>{t.question} {currentQuestionIndex + 1}/{totalQuestions}</span>
           <span>Score: {score}</span>
         </div>
         <div className="h-2 bg-secondary rounded-full overflow-hidden">
           <div
             className="h-full bg-primary transition-all duration-300"
-            style={{ width: `${((currentQuestionIndex + 1) / filteredQuestions.length) * 100}%` }}
+            style={{ width: `${((currentQuestionIndex + 1) / totalQuestions) * 100}%` }}
           />
         </div>
       </div>
@@ -245,7 +179,7 @@ const Quiz = () => {
       {/* Next Button */}
       {showResult && (
         <Button onClick={handleNext} className="w-full gap-2" size="lg">
-          {currentQuestionIndex < filteredQuestions.length - 1 ? t.nextQuestion : t.finishQuiz}
+          {currentQuestionIndex < totalQuestions - 1 ? t.nextQuestion : t.finishQuiz}
           <ArrowRight className="w-4 h-4" />
         </Button>
       )}
