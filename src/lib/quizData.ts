@@ -371,4 +371,244 @@ export const quizQuestions: QuizQuestion[] = [
     },
     category: 'growth',
   },
+  {
+    id: 'q19',
+    question: {
+      en: 'What is the best first food for a baby after 6 months?',
+      hi: '6 महीने के बाद बच्चे के लिए सबसे अच्छा पहला भोजन क्या है?',
+      mr: '6 महिन्यांनंतर बाळासाठी सर्वोत्तम पहिला आहार कोणता?',
+    },
+    options: {
+      en: ['Mashed rice or dal', 'Chocolate', 'Chips', 'Cold drinks'],
+      hi: ['मसला हुआ चावल या दाल', 'चॉकलेट', 'चिप्स', 'कोल्ड ड्रिंक'],
+      mr: ['मॅश केलेला भात किंवा डाळ', 'चॉकलेट', 'चिप्स', 'कोल्ड ड्रिंक्स'],
+    },
+    correctIndex: 0,
+    explanation: {
+      en: 'Soft, mashed homemade foods like rice and dal are ideal first foods. Avoid processed and sugary items.',
+      hi: 'नरम, मसला हुआ घर का बना भोजन जैसे चावल और दाल आदर्श पहला भोजन है।',
+      mr: 'मऊ, मॅश केलेले घरचे अन्न जसे भात आणि डाळ आदर्श पहिला आहार आहे.',
+    },
+    category: 'complementary',
+  },
+  {
+    id: 'q20',
+    question: {
+      en: 'How many times a day should a 6-8 month old baby be fed solid food?',
+      hi: '6-8 महीने के बच्चे को दिन में कितनी बार ठोस आहार खिलाना चाहिए?',
+      mr: '6-8 महिन्यांच्या बाळाला दिवसातून किती वेळा घन आहार द्यावा?',
+    },
+    options: {
+      en: ['1 time', '2-3 times', '5-6 times', 'Only when crying'],
+      hi: ['1 बार', '2-3 बार', '5-6 बार', 'केवल जब रोए'],
+      mr: ['1 वेळा', '2-3 वेळा', '5-6 वेळा', 'फक्त रडताना'],
+    },
+    correctIndex: 1,
+    explanation: {
+      en: 'Babies aged 6-8 months should be fed solid foods 2-3 times a day alongside continued breastfeeding.',
+      hi: '6-8 महीने के बच्चों को स्तनपान जारी रखते हुए दिन में 2-3 बार ठोस आहार दिया जाना चाहिए।',
+      mr: '6-8 महिन्यांच्या बाळांना स्तनपान सुरू ठेवत दिवसातून 2-3 वेळा घन आहार द्यावा.',
+    },
+    category: 'complementary',
+  },
+  {
+    id: 'q21',
+    question: {
+      en: 'Which vitamin is produced when skin is exposed to sunlight?',
+      hi: 'त्वचा को धूप में रखने पर कौन सा विटामिन बनता है?',
+      mr: 'त्वचा सूर्यप्रकाशात आल्यावर कोणते व्हिटॅमिन तयार होते?',
+    },
+    options: {
+      en: ['Vitamin A', 'Vitamin B', 'Vitamin C', 'Vitamin D'],
+      hi: ['विटामिन A', 'विटामिन B', 'विटामिन C', 'विटामिन D'],
+      mr: ['व्हिटॅमिन A', 'व्हिटॅमिन B', 'व्हिटॅमिन C', 'व्हिटॅमिन D'],
+    },
+    correctIndex: 3,
+    explanation: {
+      en: 'Vitamin D is produced when skin is exposed to sunlight. It is essential for bone health and calcium absorption in infants.',
+      hi: 'सूर्य के प्रकाश में त्वचा के संपर्क में आने पर विटामिन D बनता है। यह हड्डियों के स्वास्थ्य के लिए आवश्यक है।',
+      mr: 'सूर्यप्रकाशात त्वचा आल्यावर व्हिटॅमिन D तयार होते. हे हाडांच्या आरोग्यासाठी आवश्यक आहे.',
+    },
+    category: 'nutrition',
+  },
+  {
+    id: 'q22',
+    question: {
+      en: 'Which nutrient is most important for brain development in infants?',
+      hi: 'शिशुओं में मस्तिष्क विकास के लिए कौन सा पोषक तत्व सबसे महत्वपूर्ण है?',
+      mr: 'बाळांच्या मेंदूच्या विकासासाठी कोणते पोषक तत्व सर्वात महत्त्वाचे आहे?',
+    },
+    options: {
+      en: ['Sugar', 'Iron', 'Salt', 'Caffeine'],
+      hi: ['चीनी', 'आयरन', 'नमक', 'कैफीन'],
+      mr: ['साखर', 'लोह', 'मीठ', 'कॅफीन'],
+    },
+    correctIndex: 1,
+    explanation: {
+      en: 'Iron is crucial for brain development. Iron-rich foods like green leafy vegetables, eggs, and fortified cereals should be included in an infant\'s diet.',
+      hi: 'आयरन मस्तिष्क विकास के लिए महत्वपूर्ण है। आयरन युक्त खाद्य पदार्थ शिशु के आहार में शामिल होने चाहिए।',
+      mr: 'लोह मेंदूच्या विकासासाठी महत्त्वाचे आहे. लोहयुक्त पदार्थ बाळाच्या आहारात समाविष्ट करावेत.',
+    },
+    category: 'nutrition',
+  },
+  {
+    id: 'q23',
+    question: {
+      en: 'How should you clean a baby\'s feeding bottles?',
+      hi: 'बच्चे की फीडिंग बोतलें कैसे साफ करनी चाहिए?',
+      mr: 'बाळाच्या फीडिंग बॉटल्स कशा स्वच्छ कराव्यात?',
+    },
+    options: {
+      en: ['Rinse with water only', 'Wash and sterilize properly', 'Wipe with cloth', 'No need to clean'],
+      hi: ['केवल पानी से धोएं', 'अच्छी तरह धोएं और स्टरलाइज़ करें', 'कपड़े से पोंछें', 'साफ करने की जरूरत नहीं'],
+      mr: ['फक्त पाण्याने धुवा', 'नीट धुवा आणि निर्जंतुक करा', 'कापडाने पुसा', 'स्वच्छ करण्याची गरज नाही'],
+    },
+    correctIndex: 1,
+    explanation: {
+      en: 'Feeding bottles must be washed thoroughly with soap and sterilized by boiling to prevent bacterial contamination.',
+      hi: 'फीडिंग बोतलों को साबुन से अच्छी तरह धोकर उबालकर स्टरलाइज़ करना चाहिए।',
+      mr: 'फीडिंग बॉटल्स साबणाने नीट धुवून उकळवून निर्जंतुक कराव्यात.',
+    },
+    category: 'hygiene',
+  },
+  {
+    id: 'q24',
+    question: {
+      en: 'What is the recommended duration for continued breastfeeding along with solid foods?',
+      hi: 'ठोस आहार के साथ स्तनपान जारी रखने की अनुशंसित अवधि क्या है?',
+      mr: 'घन आहारासह स्तनपान सुरू ठेवण्याचा शिफारस केलेला कालावधी किती आहे?',
+    },
+    options: {
+      en: ['Up to 1 year', 'Up to 2 years or beyond', 'Up to 6 months only', 'No need after solids start'],
+      hi: ['1 साल तक', '2 साल या उससे अधिक', 'केवल 6 महीने तक', 'ठोस आहार शुरू होने के बाद जरूरत नहीं'],
+      mr: ['1 वर्षापर्यंत', '2 वर्षे किंवा त्यापुढे', 'फक्त 6 महिन्यांपर्यंत', 'घन आहार सुरू झाल्यावर गरज नाही'],
+    },
+    correctIndex: 1,
+    explanation: {
+      en: 'WHO recommends continued breastfeeding up to 2 years or beyond along with appropriate complementary foods.',
+      hi: 'WHO उचित पूरक आहार के साथ 2 साल या उससे अधिक तक स्तनपान जारी रखने की सिफारिश करता है।',
+      mr: 'WHO योग्य पूरक आहारासह 2 वर्षे किंवा त्यापुढे स्तनपान सुरू ठेवण्याची शिफारस करते.',
+    },
+    category: 'breastfeeding',
+  },
+  {
+    id: 'q25',
+    question: {
+      en: 'What should you do if a breastfeeding mother has a common cold?',
+      hi: 'अगर स्तनपान कराने वाली माँ को सामान्य सर्दी हो तो क्या करना चाहिए?',
+      mr: 'स्तनपान करणाऱ्या आईला सामान्य सर्दी झाल्यास काय करावे?',
+    },
+    options: {
+      en: ['Stop breastfeeding', 'Continue breastfeeding', 'Give formula milk', 'Give cow milk'],
+      hi: ['स्तनपान बंद करें', 'स्तनपान जारी रखें', 'फॉर्मूला दूध दें', 'गाय का दूध दें'],
+      mr: ['स्तनपान थांबवा', 'स्तनपान सुरू ठेवा', 'फॉर्म्युला दूध द्या', 'गायीचे दूध द्या'],
+    },
+    correctIndex: 1,
+    explanation: {
+      en: 'Breastfeeding should continue even if the mother has a common cold. Breast milk contains antibodies that protect the baby.',
+      hi: 'सामान्य सर्दी होने पर भी स्तनपान जारी रखना चाहिए। स्तन के दूध में एंटीबॉडी होती हैं जो बच्चे की रक्षा करती हैं।',
+      mr: 'आईला सामान्य सर्दी असली तरी स्तनपान सुरू ठेवावे. आईच्या दुधात अँटीबॉडीज असतात जे बाळाचे रक्षण करतात.',
+    },
+    category: 'breastfeeding',
+  },
+  {
+    id: 'q26',
+    question: {
+      en: 'At what age does a baby typically start crawling?',
+      hi: 'बच्चा आमतौर पर किस उम्र में रेंगना शुरू करता है?',
+      mr: 'बाळ सामान्यतः कोणत्या वयात रांगायला लागते?',
+    },
+    options: {
+      en: ['2-3 months', '6-10 months', '12-15 months', '18 months'],
+      hi: ['2-3 महीने', '6-10 महीने', '12-15 महीने', '18 महीने'],
+      mr: ['2-3 महिने', '6-10 महिने', '12-15 महिने', '18 महिने'],
+    },
+    correctIndex: 1,
+    explanation: {
+      en: 'Most babies start crawling between 6-10 months. However, some babies skip crawling and go directly to walking.',
+      hi: 'अधिकांश बच्चे 6-10 महीने के बीच रेंगना शुरू करते हैं।',
+      mr: 'बहुतेक बाळे 6-10 महिन्यांत रांगायला लागतात.',
+    },
+    category: 'growth',
+  },
+  {
+    id: 'q27',
+    question: {
+      en: 'Which of the following is a sign of dehydration in infants?',
+      hi: 'निम्नलिखित में से कौन सा शिशुओं में निर्जलीकरण का संकेत है?',
+      mr: 'खालीलपैकी कोणते बाळांमधील निर्जलीकरणाचे लक्षण आहे?',
+    },
+    options: {
+      en: ['Frequent urination', 'Dry mouth and fewer tears', 'Excessive sweating', 'Increased appetite'],
+      hi: ['बार-बार पेशाब', 'सूखा मुंह और कम आंसू', 'अत्यधिक पसीना', 'बढ़ी हुई भूख'],
+      mr: ['वारंवार लघवी', 'कोरडे तोंड आणि कमी अश्रू', 'जास्त घाम', 'वाढलेली भूक'],
+    },
+    correctIndex: 1,
+    explanation: {
+      en: 'Dry mouth, fewer tears, and reduced urination are key signs of dehydration. Seek medical help immediately if noticed.',
+      hi: 'सूखा मुंह, कम आंसू और कम पेशाब निर्जलीकरण के प्रमुख संकेत हैं।',
+      mr: 'कोरडे तोंड, कमी अश्रू आणि कमी लघवी हे निर्जलीकरणाचे प्रमुख लक्षणे आहेत.',
+    },
+    category: 'nutrition',
+  },
+  {
+    id: 'q28',
+    question: {
+      en: 'How should you store expressed breast milk?',
+      hi: 'निकाला हुआ स्तन दूध कैसे स्टोर करना चाहिए?',
+      mr: 'काढलेले आईचे दूध कसे साठवावे?',
+    },
+    options: {
+      en: ['In a clean container in the refrigerator', 'In an open bowl at room temperature', 'Mix with formula', 'In a metal container'],
+      hi: ['रेफ्रिजरेटर में साफ बर्तन में', 'कमरे के तापमान पर खुले कटोरे में', 'फॉर्मूला के साथ मिलाएं', 'धातु के बर्तन में'],
+      mr: ['रेफ्रिजरेटरमध्ये स्वच्छ भांड्यात', 'खोलीच्या तापमानावर उघड्या भांड्यात', 'फॉर्म्युलासोबत मिसळा', 'धातूच्या भांड्यात'],
+    },
+    correctIndex: 0,
+    explanation: {
+      en: 'Expressed breast milk should be stored in a clean, covered container in the refrigerator and used within 24 hours.',
+      hi: 'निकाला हुआ स्तन दूध रेफ्रिजरेटर में साफ, ढके हुए बर्तन में रखना चाहिए और 24 घंटे के भीतर उपयोग करना चाहिए।',
+      mr: 'काढलेले आईचे दूध रेफ्रिजरेटरमध्ये स्वच्छ, झाकलेल्या भांड्यात ठेवावे आणि 24 तासांत वापरावे.',
+    },
+    category: 'breastfeeding',
+  },
+  {
+    id: 'q29',
+    question: {
+      en: 'What is the ideal room temperature for a newborn baby?',
+      hi: 'नवजात शिशु के लिए आदर्श कमरे का तापमान क्या है?',
+      mr: 'नवजात बाळासाठी आदर्श खोलीचे तापमान किती आहे?',
+    },
+    options: {
+      en: ['16-18°C', '20-22°C', '25-28°C', '30-32°C'],
+      hi: ['16-18°C', '20-22°C', '25-28°C', '30-32°C'],
+      mr: ['16-18°C', '20-22°C', '25-28°C', '30-32°C'],
+    },
+    correctIndex: 2,
+    explanation: {
+      en: 'A room temperature of 25-28°C is ideal for newborns in India. It keeps the baby warm without overheating.',
+      hi: 'भारत में नवजात शिशुओं के लिए 25-28°C कमरे का तापमान आदर्श है।',
+      mr: 'भारतात नवजात बाळांसाठी 25-28°C खोलीचे तापमान आदर्श आहे.',
+    },
+    category: 'hygiene',
+  },
+  {
+    id: 'q30',
+    question: {
+      en: 'When should you introduce eggs in a baby\'s diet?',
+      hi: 'बच्चे के आहार में अंडे कब शामिल करने चाहिए?',
+      mr: 'बाळाच्या आहारात अंडी कधी समाविष्ट करावीत?',
+    },
+    options: {
+      en: ['After 3 months', 'After 6 months', 'After 1 year', 'After 2 years'],
+      hi: ['3 महीने बाद', '6 महीने बाद', '1 साल बाद', '2 साल बाद'],
+      mr: ['3 महिन्यांनंतर', '6 महिन्यांनंतर', '1 वर्षानंतर', '2 वर्षांनंतर'],
+    },
+    correctIndex: 1,
+    explanation: {
+      en: 'Well-cooked eggs can be introduced after 6 months. Start with the yolk and gradually introduce the whole egg.',
+      hi: 'अच्छी तरह पके हुए अंडे 6 महीने बाद शुरू किए जा सकते हैं। जर्दी से शुरू करें।',
+      mr: 'चांगले शिजवलेली अंडी 6 महिन्यांनंतर सुरू करता येतात. बलकापासून सुरुवात करा.',
+    },
+    category: 'complementary',
+  },
 ];
