@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Plus, Trash2, Edit2, Milk, Apple, Calendar, Clock, Utensils } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { Plus, Trash2, Edit2, Milk, Apple, Calendar, Clock, Utensils, Activity, Heart, Brain, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,6 +22,29 @@ interface FeedingEntry {
   notes?: string;
 }
 
+interface MilestoneDomain {
+  key: string;
+  label: string;
+  icon: React.ElementType;
+  color: string;
+  milestones: string[];
+}
+
+const CircularProgress = ({ percentage, size = 64, strokeWidth = 5, color = 'hsl(var(--primary))' }: { percentage: number; size?: number; strokeWidth?: number; color?: string }) => {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (percentage / 100) * circumference;
+
+  return (
+    <svg width={size} height={size} className="transform -rotate-90">
+      <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="hsl(var(--muted))" strokeWidth={strokeWidth} />
+      <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke={color} strokeWidth={strokeWidth} strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round" className="transition-all duration-700 ease-out" />
+      <text x={size / 2} y={size / 2} textAnchor="middle" dominantBaseline="central" className="fill-foreground text-xs font-bold" transform={`rotate(90, ${size / 2}, ${size / 2})`}>
+        {percentage}%
+      </text>
+    </svg>
+  );
+};
 
 const Tracker = () => {
   const { t, language } = useLanguage();
@@ -30,8 +53,58 @@ const Tracker = () => {
   
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<FeedingEntry | null>(null);
+  const [checkedMilestones, setCheckedMilestones] = useState<Record<string, boolean>>({});
 
-  // Form state
+  const milestoneDomains: MilestoneDomain[] = [
+    {
+      key: 'movement',
+      label: 'Movement / Physical',
+      icon: Activity,
+      color: 'hsl(var(--accent))',
+      milestones: ['Bring hands near face', 'Head control while on tummy', 'Smooth arm & leg movements', 'Pushes down with legs on flat surface'],
+    },
+    {
+      key: 'social',
+      label: 'Social / Emotional',
+      icon: Heart,
+      color: 'hsl(340, 75%, 55%)',
+      milestones: ['Begins to smile at people', 'Can briefly calm self', 'Tries to look at parent'],
+    },
+    {
+      key: 'cognitive',
+      label: 'Cognitive',
+      icon: Brain,
+      color: 'hsl(260, 60%, 55%)',
+      milestones: ['Pays attention to faces', 'Begins to follow things with eyes', 'Can see things 8-12 inches away', 'Can recognize your smell'],
+    },
+    {
+      key: 'communication',
+      label: 'Communication / Language',
+      icon: MessageCircle,
+      color: 'hsl(170, 60%, 40%)',
+      milestones: ['Makes sounds other than crying', 'Reacts to loud sounds', 'Turns head toward sounds'],
+    },
+  ];
+
+  const getDomainProgress = useCallback((domain: MilestoneDomain) => {
+    const checked = domain.milestones.filter((_, i) => checkedMilestones[`${domain.key}-${i}`]).length;
+    return Math.round((checked / domain.milestones.length) * 100);
+  }, [checkedMilestones]);
+
+  const getOverallProgress = useCallback(() => {
+    const total = milestoneDomains.reduce((sum, d) => sum + d.milestones.length, 0);
+    const checked = Object.values(checkedMilestones).filter(Boolean).length;
+    return total > 0 ? Math.round((checked / total) * 100) : 0;
+  }, [checkedMilestones]);
+
+  const toggleMilestone = (domainKey: string, index: number) => {
+    const key = `${domainKey}-${index}`;
+    setCheckedMilestones(prev => {
+      const updated = { ...prev, [key]: !prev[key] };
+      localStorage.setItem('milestone-checks', JSON.stringify(updated));
+      return updated;
+    });
+  };
   const [formData, setFormData] = useState<Partial<FeedingEntry>>({
     babyName: '',
     gender: 'male',
@@ -51,7 +124,8 @@ const Tracker = () => {
     
     if (savedEntries) setEntries(JSON.parse(savedEntries));
     if (savedAge) setBabyAge(parseInt(savedAge));
-    
+    const savedMilestones = localStorage.getItem('milestone-checks');
+    if (savedMilestones) setCheckedMilestones(JSON.parse(savedMilestones));
   }, []);
 
   // Save to localStorage
@@ -171,6 +245,82 @@ const Tracker = () => {
           <p className="text-xs text-primary/80">{t.totalSolidMeals}</p>
         </div>
       </div>
+
+      {/* Overall Progress Section */}
+      <div className="bg-card rounded-xl p-5 mb-4 shadow-soft">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h2 className="text-lg font-bold text-foreground">Overall Progress</h2>
+            <p className="text-2xl font-bold text-primary">{getOverallProgress()}%</p>
+          </div>
+          <CircularProgress percentage={getOverallProgress()} size={72} strokeWidth={6} color="hsl(var(--primary))" />
+        </div>
+        <div className="border-t border-border pt-3 space-y-2">
+          {milestoneDomains.map((domain) => {
+            const Icon = domain.icon;
+            const progress = getDomainProgress(domain);
+            return (
+              <div key={domain.key} className="flex items-center gap-2">
+                <Icon className="w-4 h-4 shrink-0" style={{ color: domain.color }} />
+                <span className="text-sm text-foreground min-w-[100px]">{domain.label}</span>
+                <span className="text-xs font-semibold min-w-[32px]" style={{ color: domain.color }}>{progress}%</span>
+                <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full rounded-full transition-all duration-500" style={{ width: `${progress}%`, backgroundColor: domain.color }} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <p className="text-xs text-muted-foreground mt-4 leading-relaxed">
+          Developmental milestones are key indicators of a child's overall progress, covering four primary domains that act as checkpoints for healthy development: movement/physical, social/emotional, cognitive, and communication/language. These skills typically build upon each other, with significant brain development occurring by age three.
+        </p>
+      </div>
+
+      {/* Milestone Domains */}
+      {milestoneDomains.map((domain) => {
+        const Icon = domain.icon;
+        const progress = getDomainProgress(domain);
+        const checkedCount = domain.milestones.filter((_, i) => checkedMilestones[`${domain.key}-${i}`]).length;
+        return (
+          <div key={domain.key} className="mb-4">
+            <div className="rounded-xl p-4 mb-2" style={{ backgroundColor: `${domain.color}15` }}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-bold text-foreground flex items-center gap-2">
+                    <Icon className="w-5 h-5" style={{ color: domain.color }} />
+                    {domain.label}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{checkedCount}/{domain.milestones.length} Milestone Reached</p>
+                </div>
+                <CircularProgress percentage={progress} size={56} strokeWidth={4} color={domain.color} />
+              </div>
+            </div>
+            <div className="space-y-2">
+              {domain.milestones.map((milestone, i) => {
+                const isChecked = !!checkedMilestones[`${domain.key}-${i}`];
+                return (
+                  <div
+                    key={i}
+                    onClick={() => toggleMilestone(domain.key, i)}
+                    className={cn(
+                      'bg-card rounded-xl p-4 shadow-soft flex items-center justify-between cursor-pointer transition-all',
+                      isChecked && 'ring-1 ring-primary/30'
+                    )}
+                  >
+                    <span className="text-sm text-foreground">{milestone}</span>
+                    <div className={cn(
+                      'w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all shrink-0 ml-3',
+                      isChecked ? 'border-primary bg-primary text-primary-foreground' : 'border-muted-foreground/30'
+                    )}>
+                      {isChecked && <span className="text-xs">✓</span>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
 
       {/* Add Entry Button */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
