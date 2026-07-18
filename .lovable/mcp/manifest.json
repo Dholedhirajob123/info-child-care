@@ -1,0 +1,191 @@
+{
+  "version": 1,
+  "sdk_version": "0.23.0",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "info-child-mcp",
+      "version": "0.1.0",
+      "title": "Info Child MCP"
+    },
+    "tools": [
+      {
+        "name": "list_topics",
+        "title": "List topics",
+        "description": "List all child nutrition and baby care topics available in Info Child, with id, category, and short summary. Use this to discover topics before calling get_topic.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "language": {
+              "description": "Language for titles/summaries. Defaults to en.",
+              "type": "string",
+              "enum": [
+                "en",
+                "hi",
+                "mr"
+              ]
+            },
+            "category": {
+              "description": "Optional category filter.",
+              "type": "string",
+              "enum": [
+                "breastfeeding",
+                "complementary",
+                "hygiene",
+                "nutrition",
+                "growth"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_topic",
+        "title": "Get topic detail",
+        "description": "Get the full detail of a single topic: description, do's, don'ts, and FAQs. Call list_topics first to discover valid ids.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Topic id (e.g. 'breastfeeding-basics')."
+            },
+            "language": {
+              "description": "Language. Defaults to en.",
+              "type": "string",
+              "enum": [
+                "en",
+                "hi",
+                "mr"
+              ]
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_vaccination_schedule",
+        "title": "Get vaccination schedule",
+        "description": "Get the month-wise infant vaccination schedule from birth through 12 months, including vaccine names, purpose, and care notes.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "language": {
+              "description": "Language. Defaults to en.",
+              "type": "string",
+              "enum": [
+                "en",
+                "hi",
+                "mr"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_quiz_questions",
+        "title": "Get quiz questions",
+        "description": "Get multiple-choice quiz questions on child nutrition and baby care, with options, correct answer index, and educational explanation.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "language": {
+              "description": "Language. Defaults to en.",
+              "type": "string",
+              "enum": [
+                "en",
+                "hi",
+                "mr"
+              ]
+            },
+            "category": {
+              "description": "Optional category filter.",
+              "type": "string",
+              "enum": [
+                "breastfeeding",
+                "complementary",
+                "hygiene",
+                "nutrition",
+                "growth"
+              ]
+            },
+            "includeAnswers": {
+              "description": "If false, omit correctIndex and explanation. Defaults to true.",
+              "type": "boolean"
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_tips",
+        "title": "List daily tips",
+        "description": "Get daily nutrition and baby care tips as simple, easy-to-read cards. Each tip has an emoji, title, content, and category.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "language": {
+              "description": "Language. Defaults to en.",
+              "type": "string",
+              "enum": [
+                "en",
+                "hi",
+                "mr"
+              ]
+            },
+            "category": {
+              "description": "Optional category filter.",
+              "type": "string",
+              "enum": [
+                "nutrition",
+                "care",
+                "feeding",
+                "hygiene"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
