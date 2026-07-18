@@ -27,7 +27,7 @@ const AdminDashboard = () => {
         .from('surveys')
         .select('*')
         .order('submitted_at', { ascending: false });
-      if (!error && data) setRows(data as SurveyRow[]);
+      if (!error && data) setRows(data as unknown as SurveyRow[]);
       setLoading(false);
     })();
   }, []);

@@ -69,7 +69,7 @@ const Quiz = () => {
         parent_name: parentInfo.parentName,
         parent_email: parentInfo.parentEmail,
         gender: parentInfo.gender,
-        answers: finalAnswers,
+        answers: finalAnswers as unknown as never,
         score: finalScore,
         total: totalQuestions,
       })

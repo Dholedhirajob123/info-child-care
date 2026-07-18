@@ -14,7 +14,7 @@ const AdminSurvey = () => {
     if (!id) return;
     (async () => {
       const { data } = await supabase.from('surveys').select('*').eq('id', id).maybeSingle();
-      setRow(data as SurveyRow | null);
+      setRow(data as unknown as SurveyRow | null);
       setLoading(false);
     })();
   }, [id]);
