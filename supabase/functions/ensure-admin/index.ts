@@ -2,7 +2,7 @@ import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const ADMIN_EMAIL = 'shital@gmail.com';
-const ADMIN_PASSWORD = 'shital123';
+const ADMIN_PASSWORD = 'shital@123';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
@@ -27,6 +27,9 @@ Deno.serve(async (req) => {
       });
       if (createErr) throw createErr;
       user = created.user!;
+    } else {
+      // Ensure password matches the current desired value
+      await admin.auth.admin.updateUserById(user.id, { password: ADMIN_PASSWORD });
     }
 
     // Ensure admin role
