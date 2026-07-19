@@ -1,31 +1,74 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, FileDown } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { ArrowLeft, FileDown, CheckCircle2 } from 'lucide-react';
 import { exportSurveysToPDF, type SurveyRow, type AnswerRecord } from '@/lib/adminExport';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { sectionA, sectionB } from '@/lib/surveyData';
+
+const MARK_KEY = 'admin_marks_v1';
+const loadMarks = (): Record<string, Record<string, boolean>> => {
+  try { return JSON.parse(localStorage.getItem(MARK_KEY) || '{}'); } catch { return {}; }
+};
+const saveMarks = (m: Record<string, Record<string, boolean>>) =>
+  localStorage.setItem(MARK_KEY, JSON.stringify(m));
+
+const ALL_Q = [...sectionA.questions, ...sectionB.questions];
 
 const AdminSurvey = () => {
   const { id } = useParams();
   const [row, setRow] = useState<SurveyRow | null>(null);
+  const [allRows, setAllRows] = useState<SurveyRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [marks, setMarks] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (!id) return;
     (async () => {
-      const { data } = await supabase.from('surveys').select('*').eq('id', id).maybeSingle();
-      setRow(data as unknown as SurveyRow | null);
+      const [{ data: one }, { data: all }] = await Promise.all([
+        supabase.from('surveys').select('*').eq('id', id).maybeSingle(),
+        supabase.from('surveys').select('*'),
+      ]);
+      setRow(one as unknown as SurveyRow | null);
+      setAllRows((all as unknown as SurveyRow[]) ?? []);
+      setMarks(loadMarks()[id] ?? {});
       setLoading(false);
     })();
   }, [id]);
 
+  const toggleMark = (qid: string) => {
+    if (!id) return;
+    const next = { ...marks, [qid]: !marks[qid] };
+    setMarks(next);
+    const all = loadMarks();
+    all[id] = next;
+    saveMarks(all);
+  };
+
+  const answers = useMemo(() => (row?.answers ?? []) as AnswerRecord[], [row]);
+
+  // Build distribution per question across all submissions
+  const distributionFor = (qid: string, options: string[]) => {
+    const counts = new Map<string, number>();
+    options.forEach((o) => counts.set(o, 0));
+    allRows.forEach((r) => {
+      const ans = ((r.answers ?? []) as AnswerRecord[]).find((a) => a.questionId === qid);
+      if (!ans) return;
+      const txt = (ans.selectedText || '').split(',').map((s) => s.trim().replace(/^Others:.*/, 'Others'));
+      txt.forEach((t) => {
+        if (counts.has(t)) counts.set(t, (counts.get(t) || 0) + 1);
+      });
+    });
+    return options.map((o) => ({ name: o.length > 22 ? o.slice(0, 20) + '…' : o, full: o, count: counts.get(o) || 0 }));
+  };
+
   if (loading) return <div className="p-8 text-center text-muted-foreground">Loading…</div>;
   if (!row) return <div className="p-8 text-center text-muted-foreground">Survey not found.</div>;
 
-  const answers = (row.answers ?? []) as AnswerRecord[];
-
   return (
-    <div className="page-transition p-4 max-w-2xl mx-auto">
+    <div className="page-transition p-4 max-w-3xl mx-auto">
       <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
         <Button asChild variant="outline" size="sm" className="gap-1.5">
           <Link to="/admin/dashboard"><ArrowLeft className="w-4 h-4" /> Back</Link>
@@ -43,22 +86,53 @@ const AdminSurvey = () => {
           <dt className="text-muted-foreground">Gender</dt><dd>{row.gender}</dd>
           <dt className="text-muted-foreground">Submission Date</dt><dd>{new Date(row.submitted_at).toLocaleString()}</dd>
           <dt className="text-muted-foreground">Survey ID</dt><dd className="font-mono text-xs break-all">{row.id}</dd>
-          <dt className="text-muted-foreground">Health Score</dt><dd className="font-semibold">{row.score}/{row.total}</dd>
+          <dt className="text-muted-foreground">Reviewed</dt><dd>{Object.values(marks).filter(Boolean).length} / {answers.length}</dd>
         </dl>
       </div>
 
       <div className="bg-card border border-border rounded-xl p-5 shadow-soft">
-        <h2 className="font-semibold text-foreground mb-3">Survey Answers</h2>
-        <div className="space-y-3">
-          {answers.map((a, i) => (
-            <div key={i} className="border-b border-border last:border-0 pb-3 last:pb-0">
-              <p className="font-medium text-foreground">Q{i + 1}. {a.question}</p>
-              <p className="text-sm mt-1">
-                <span className="text-muted-foreground">Selected Answer: </span>
-                <span className="font-medium">{a.selectedText}</span>
-              </p>
-            </div>
-          ))}
+        <h2 className="font-semibold text-foreground mb-4">Survey Answers &amp; Response Distribution</h2>
+        <div className="space-y-6">
+          {answers.map((a, i) => {
+            const meta = ALL_Q.find((q) => q.id === a.questionId);
+            const options = meta?.options ?? [];
+            const data = distributionFor(a.questionId, options);
+            const selectedText = a.selectedText || '';
+            const marked = !!marks[a.questionId];
+            return (
+              <div key={a.questionId + i} className={`border rounded-lg p-4 ${marked ? 'border-success bg-success/5' : 'border-border'}`}>
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <p className="font-medium text-foreground">Q{i + 1}. {a.question}</p>
+                  <label className="flex items-center gap-1.5 text-xs text-muted-foreground cursor-pointer shrink-0">
+                    <Checkbox checked={marked} onCheckedChange={() => toggleMark(a.questionId)} />
+                    <span>Mark reviewed</span>
+                    {marked && <CheckCircle2 className="w-3.5 h-3.5 text-success" />}
+                  </label>
+                </div>
+                <p className="text-sm mb-3">
+                  <span className="text-muted-foreground">Parent Answer: </span>
+                  <span className="font-semibold text-primary">{selectedText || '—'}</span>
+                </p>
+                {options.length > 0 && (
+                  <div className="h-48 -ml-2">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 40 }}>
+                        <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-20} textAnchor="end" interval={0} />
+                        <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
+                        <Tooltip formatter={(v: number) => [`${v} response(s)`, 'Count']} labelFormatter={(_, p) => (p?.[0]?.payload as { full: string })?.full ?? ''} />
+                        <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                          {data.map((d, idx) => (
+                            <Cell key={idx} fill={selectedText.includes(d.full) ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground) / 0.4)'} />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
+                <p className="text-[11px] text-muted-foreground mt-1">Highlighted bar = this parent’s selected answer · across {allRows.length} submission(s)</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
