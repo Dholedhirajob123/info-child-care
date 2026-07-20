@@ -1,8 +1,11 @@
 import { ReactNode } from 'react';
-import { Baby } from 'lucide-react';
+import { Baby, Shield, LogOut } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { BottomNavigation } from './BottomNavigation';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
+import { Button } from '@/components/ui/button';
 
 interface AppLayoutProps {
   children: ReactNode;
