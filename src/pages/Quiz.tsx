@@ -127,6 +127,11 @@ const Quiz = () => {
           <Button size="lg" className="gap-2" onClick={() => setModalOpen(true)}>
             <Play className="w-4 h-4" /> Start Quiz
           </Button>
+          <div className="mt-6">
+            <Button variant="outline" size="sm" onClick={() => navigate('/admin/login')}>
+              Admin Login
+            </Button>
+          </div>
         </div>
         <ParentInfoModal open={modalOpen} onOpenChange={setModalOpen} onStart={(info) => { setParentInfo(info); setModalOpen(false); }} />
       </div>
