@@ -2,7 +2,7 @@ import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
 import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const ADMIN_EMAIL = 'shital@gmail.com';
-const ADMIN_PASSWORD = 'shital';
+const ADMIN_PASSWORD = 'shital@123';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
