@@ -1,8 +1,11 @@
 import { ReactNode } from 'react';
-import { Baby } from 'lucide-react';
+import { Baby, Shield, LogOut } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { BottomNavigation } from './BottomNavigation';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
+import { Button } from '@/components/ui/button';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -10,6 +13,7 @@ interface AppLayoutProps {
 
 export const AppLayout = ({ children }: AppLayoutProps) => {
   const { t } = useLanguage();
+  const { session, isAdmin, signOut } = useAdminAuth();
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -29,7 +33,23 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
               </span>
             </div>
           </div>
-          <LanguageSwitcher />
+          <div className="flex items-center gap-1.5">
+            {session && isAdmin ? (
+              <>
+                <Button asChild variant="outline" size="sm" className="gap-1.5 h-8">
+                  <Link to="/admin/dashboard"><Shield className="w-3.5 h-3.5" /> Admin</Link>
+                </Button>
+                <Button variant="ghost" size="sm" className="gap-1.5 h-8" onClick={() => signOut()}>
+                  <LogOut className="w-3.5 h-3.5" /> Logout
+                </Button>
+              </>
+            ) : (
+              <Button asChild variant="ghost" size="sm" className="gap-1.5 h-8">
+                <Link to="/admin/login"><Shield className="w-3.5 h-3.5" /> Admin</Link>
+              </Button>
+            )}
+            <LanguageSwitcher />
+          </div>
         </div>
       </header>
 
