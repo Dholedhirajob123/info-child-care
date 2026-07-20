@@ -79,24 +79,24 @@ const Quiz = () => {
       question: q.question,
       selectedText: answerToText(q, answers[q.id]),
     }));
-    const { data, error } = await supabase
+    const newId = (typeof crypto !== 'undefined' && 'randomUUID' in crypto) ? crypto.randomUUID() : `${Date.now()}`;
+    const { error } = await supabase
       .from('surveys')
       .insert({
+        id: newId,
         parent_name: parentInfo.parentName,
         parent_email: parentInfo.parentEmail,
         gender: parentInfo.gender,
         answers: all as unknown as never,
         score: 0,
         total: sectionB.questions.length,
-      })
-      .select('id')
-      .single();
+      });
     setSubmitting(false);
     if (error) {
       toast({ title: 'Could not submit', description: error.message, variant: 'destructive' });
       return;
     }
-    setSurveyId(data.id);
+    setSurveyId(newId);
     setStep('done');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
