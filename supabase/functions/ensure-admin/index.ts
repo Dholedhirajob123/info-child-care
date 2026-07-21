@@ -29,7 +29,11 @@ Deno.serve(async (req) => {
       user = created.user!;
     } else {
       // Ensure password matches the current desired value
-      await admin.auth.admin.updateUserById(user.id, { password: ADMIN_PASSWORD });
+      const { error: updateErr } = await admin.auth.admin.updateUserById(user.id, {
+        password: ADMIN_PASSWORD,
+        email_confirm: true,
+      });
+      if (updateErr) throw updateErr;
     }
 
     // Ensure admin role
