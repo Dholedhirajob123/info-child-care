@@ -10,10 +10,14 @@ import {
 import { LogOut, Eye, FileDown, FileSpreadsheet } from 'lucide-react';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { exportSurveysToExcel, exportSurveysToPDF, type SurveyRow } from '@/lib/adminExport';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { surveyStrings } from '@/lib/surveyI18n';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { signOut } = useAdminAuth();
+  const { language } = useLanguage();
+  const s = surveyStrings[language];
   const [rows, setRows] = useState<SurveyRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -51,68 +55,66 @@ const AdminDashboard = () => {
   return (
     <div className="page-transition p-4">
       <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
-        <h1 className="text-title text-foreground">Admin Dashboard</h1>
+        <h1 className="text-title text-foreground">{s.adminDashboard}</h1>
         <Button variant="outline" size="sm" onClick={handleLogout} className="gap-1.5">
-          <LogOut className="w-4 h-4" /> Logout
+          <LogOut className="w-4 h-4" /> {s.logout}
         </Button>
       </div>
 
-      {/* Filters */}
       <div className="bg-card border border-border rounded-xl p-4 mb-4 shadow-soft grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         <div className="space-y-1">
-          <Label className="text-xs">Search (name / email)</Label>
-          <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search…" />
+          <Label className="text-xs">{s.searchNameEmail}</Label>
+          <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="…" />
         </div>
         <div className="space-y-1">
-          <Label className="text-xs">Gender</Label>
+          <Label className="text-xs">{s.gender}</Label>
           <Select value={genderFilter} onValueChange={setGenderFilter}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All</SelectItem>
-              <SelectItem value="Male">Male</SelectItem>
-              <SelectItem value="Female">Female</SelectItem>
-              <SelectItem value="Other">Other</SelectItem>
+              <SelectItem value="all">{s.all}</SelectItem>
+              <SelectItem value="Male">{s.male}</SelectItem>
+              <SelectItem value="Female">{s.female}</SelectItem>
+              <SelectItem value="Other">{s.other}</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div className="space-y-1">
-          <Label className="text-xs">From</Label>
+          <Label className="text-xs">{s.from}</Label>
           <Input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
         </div>
         <div className="space-y-1">
-          <Label className="text-xs">To</Label>
+          <Label className="text-xs">{s.to}</Label>
           <Input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
         </div>
       </div>
 
       <div className="flex gap-2 mb-4">
         <Button variant="outline" size="sm" className="gap-1.5" onClick={() => exportSurveysToExcel(filtered)}>
-          <FileSpreadsheet className="w-4 h-4" /> Export Excel
+          <FileSpreadsheet className="w-4 h-4" /> {s.exportExcel}
         </Button>
         <Button variant="outline" size="sm" className="gap-1.5" onClick={() => exportSurveysToPDF(filtered)}>
-          <FileDown className="w-4 h-4" /> Export PDF
+          <FileDown className="w-4 h-4" /> {s.exportPDF}
         </Button>
-        <span className="text-sm text-muted-foreground self-center ml-auto">{filtered.length} submission(s)</span>
+        <span className="text-sm text-muted-foreground self-center ml-auto">{s.submissionsCount(filtered.length)}</span>
       </div>
 
-      {/* Table */}
       <div className="bg-card border border-border rounded-xl shadow-soft overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-muted/40 text-left">
             <tr>
-              <th className="p-3 font-medium">Survey ID</th>
-              <th className="p-3 font-medium">Parent Name</th>
-              <th className="p-3 font-medium">Email</th>
-              <th className="p-3 font-medium">Gender</th>
-              <th className="p-3 font-medium">Score</th>
-              <th className="p-3 font-medium">Date</th>
-              <th className="p-3 font-medium">Action</th>
+              <th className="p-3 font-medium">{s.surveyIdCol}</th>
+              <th className="p-3 font-medium">{s.parentNameCol}</th>
+              <th className="p-3 font-medium">{s.emailCol}</th>
+              <th className="p-3 font-medium">{s.genderCol}</th>
+              <th className="p-3 font-medium">{s.scoreCol}</th>
+              <th className="p-3 font-medium">{s.dateCol}</th>
+              <th className="p-3 font-medium">{s.actionCol}</th>
             </tr>
           </thead>
           <tbody>
-            {loading && <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">Loading…</td></tr>}
+            {loading && <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">{s.loadingText}</td></tr>}
             {!loading && filtered.length === 0 && (
-              <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">No submissions found.</td></tr>
+              <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">{s.noSubmissions}</td></tr>
             )}
             {filtered.map((r) => (
               <tr key={r.id} className="border-t border-border">
@@ -124,7 +126,7 @@ const AdminDashboard = () => {
                 <td className="p-3 whitespace-nowrap">{new Date(r.submitted_at).toLocaleString()}</td>
                 <td className="p-3">
                   <Button asChild size="sm" variant="outline" className="gap-1.5">
-                    <Link to={`/admin/survey/${r.id}`}><Eye className="w-3.5 h-3.5" /> View</Link>
+                    <Link to={`/admin/survey/${r.id}`}><Eye className="w-3.5 h-3.5" /> {s.view}</Link>
                   </Button>
                 </td>
               </tr>
