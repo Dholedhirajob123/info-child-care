@@ -5,9 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { surveyStrings } from '@/lib/surveyI18n';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  const s = surveyStrings[language];
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -22,11 +26,10 @@ const AdminLogin = () => {
       password,
     });
     if (signInErr || !data.session) {
-      setError('Invalid email or password.');
+      setError(s.invalidCreds);
       setLoading(false);
       return;
     }
-    // Confirm admin role
     const { data: role } = await supabase
       .from('user_roles')
       .select('role')
@@ -35,7 +38,7 @@ const AdminLogin = () => {
       .maybeSingle();
     if (!role) {
       await supabase.auth.signOut();
-      setError('Invalid email or password.');
+      setError(s.invalidCreds);
       setLoading(false);
       return;
     }
@@ -49,21 +52,21 @@ const AdminLogin = () => {
           <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
             <Lock className="w-7 h-7 text-primary" />
           </div>
-          <h1 className="text-title text-foreground">Admin Login</h1>
+          <h1 className="text-title text-foreground">{s.adminLogin}</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-card border border-border rounded-xl p-5 shadow-soft space-y-4">
           <div className="space-y-1.5">
-            <Label htmlFor="email">Admin Email</Label>
+            <Label htmlFor="email">{s.adminEmail}</Label>
             <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="password">Admin Password</Label>
+            <Label htmlFor="password">{s.adminPassword}</Label>
             <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
           {error && <p className="text-sm text-destructive">{error}</p>}
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Signing in…' : 'Sign in'}
+            {loading ? s.signingIn : s.signIn}
           </Button>
         </form>
       </div>
