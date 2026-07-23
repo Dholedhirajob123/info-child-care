@@ -1,17 +1,32 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
-import { LogOut, Eye, FileDown, FileSpreadsheet } from 'lucide-react';
+import { LogOut, Eye, Trash2, Loader2 } from 'lucide-react';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
-import { exportSurveysToExcel, exportSurveysToPDF, type SurveyRow } from '@/lib/adminExport';
+import { type SurveyRow } from '@/lib/adminExport';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { surveyStrings } from '@/lib/surveyI18n';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { toast } from '@/hooks/use-toast';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -22,34 +37,128 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [genderFilter, setGenderFilter] = useState<string>('all');
-  const [dateFrom, setDateFrom] = useState('');
-  const [dateTo, setDateTo] = useState('');
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedDeleteId, setSelectedDeleteId] = useState<string | null>(null);
 
-  useEffect(() => {
-    (async () => {
+  const fetchSurveys = useCallback(async () => {
+    setLoading(true);
+    try {
       const { data, error } = await supabase
         .from('surveys')
         .select('*')
         .order('submitted_at', { ascending: false });
-      if (!error && data) setRows(data as unknown as SurveyRow[]);
+
+      if (error) {
+        console.error('Error fetching surveys:', error);
+        toast({
+          title: 'Error',
+          description: 'Failed to load surveys.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      if (data) {
+        setRows(data as unknown as SurveyRow[]);
+      }
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast({
+        title: 'Error',
+        description: 'An unexpected error occurred.',
+        variant: 'destructive',
+      });
+    } finally {
       setLoading(false);
-    })();
+    }
   }, []);
+
+  useEffect(() => {
+    fetchSurveys();
+  }, [fetchSurveys]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     return rows.filter((r) => {
-      if (q && !r.parent_name.toLowerCase().includes(q) && !r.parent_email.toLowerCase().includes(q)) return false;
-      if (genderFilter !== 'all' && r.gender !== genderFilter) return false;
-      if (dateFrom && new Date(r.submitted_at) < new Date(dateFrom)) return false;
-      if (dateTo && new Date(r.submitted_at) > new Date(dateTo + 'T23:59:59')) return false;
+      if (q && !r.parent_name.toLowerCase().includes(q) && !r.parent_email.toLowerCase().includes(q)) {
+        return false;
+      }
+      if (genderFilter !== 'all' && r.gender !== genderFilter) {
+        return false;
+      }
       return true;
     });
-  }, [rows, search, genderFilter, dateFrom, dateTo]);
+  }, [rows, search, genderFilter]);
 
   const handleLogout = async () => {
-    await signOut();
-    navigate('/admin/login');
+    try {
+      await signOut();
+      navigate('/admin/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to logout.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    console.log('🗑️ Attempting to delete survey:', id);
+    setDeletingId(id);
+    setDeleteDialogOpen(false);
+
+    try {
+      const { error } = await supabase
+        .from('surveys')
+        .delete()
+        .eq('id', id);
+
+      console.log('📦 Delete response:', { error });
+
+      if (error) {
+        console.error('❌ Delete error:', error);
+        toast({
+          title: 'Delete Failed',
+          description: error.message || 'Failed to delete survey.',
+          variant: 'destructive',
+        });
+        setDeletingId(null);
+        return;
+      }
+
+      toast({
+        title: 'Success',
+        description: 'Survey deleted successfully!',
+        variant: 'default',
+      });
+
+      // Remove from state
+      setRows(prevRows => prevRows.filter(row => row.id !== id));
+
+    } catch (error: any) {
+      console.error('💥 Error:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'An error occurred.',
+        variant: 'destructive',
+      });
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const openDeleteDialog = (id: string) => {
+    setSelectedDeleteId(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const getGenderLabel = (gender: string) => {
+    if (gender === 'Male') return s.male;
+    if (gender === 'Female') return s.female;
+    return gender || 'Other';
   };
 
   return (
@@ -61,16 +170,24 @@ const AdminDashboard = () => {
         </Button>
       </div>
 
-      <div className="bg-card border border-border rounded-xl p-4 mb-4 shadow-soft grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      {/* Filters - Removed Date Filters */}
+      <div className="bg-card border border-border rounded-xl p-4 mb-4 shadow-soft grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1">
           <Label className="text-xs">{s.searchNameEmail}</Label>
-          <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="…" />
+          <Input 
+            value={search} 
+            onChange={(e) => setSearch(e.target.value)} 
+            placeholder="Search by name or email..." 
+            className="bg-background"
+          />
         </div>
         <div className="space-y-1">
           <Label className="text-xs">{s.gender}</Label>
           <Select value={genderFilter} onValueChange={setGenderFilter}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
-            <SelectContent>
+            <SelectTrigger className="bg-background">
+              <SelectValue placeholder="All genders" />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-border z-50">
               <SelectItem value="all">{s.all}</SelectItem>
               <SelectItem value="Male">{s.male}</SelectItem>
               <SelectItem value="Female">{s.female}</SelectItem>
@@ -78,55 +195,74 @@ const AdminDashboard = () => {
             </SelectContent>
           </Select>
         </div>
-        <div className="space-y-1">
-          <Label className="text-xs">{s.from}</Label>
-          <Input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
-        </div>
-        <div className="space-y-1">
-          <Label className="text-xs">{s.to}</Label>
-          <Input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
-        </div>
       </div>
 
-      <div className="flex gap-2 mb-4">
-        <Button variant="outline" size="sm" className="gap-1.5" onClick={() => exportSurveysToExcel(filtered)}>
-          <FileSpreadsheet className="w-4 h-4" /> {s.exportExcel}
-        </Button>
-        <Button variant="outline" size="sm" className="gap-1.5" onClick={() => exportSurveysToPDF(filtered)}>
-          <FileDown className="w-4 h-4" /> {s.exportPDF}
-        </Button>
-        <span className="text-sm text-muted-foreground self-center ml-auto">{s.submissionsCount(filtered.length)}</span>
-      </div>
-
+      {/* Table */}
       <div className="bg-card border border-border rounded-xl shadow-soft overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-muted/40 text-left">
             <tr>
-              <th className="p-3 font-medium">{s.surveyIdCol}</th>
+              <th className="p-3 font-medium">#</th>
               <th className="p-3 font-medium">{s.parentNameCol}</th>
               <th className="p-3 font-medium">{s.emailCol}</th>
               <th className="p-3 font-medium">{s.genderCol}</th>
-              <th className="p-3 font-medium">{s.scoreCol}</th>
               <th className="p-3 font-medium">{s.dateCol}</th>
               <th className="p-3 font-medium">{s.actionCol}</th>
+              <th className="p-3 font-medium text-center">Delete</th>
             </tr>
           </thead>
           <tbody>
-            {loading && <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">{s.loadingText}</td></tr>}
-            {!loading && filtered.length === 0 && (
-              <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">{s.noSubmissions}</td></tr>
+            {loading && (
+              <tr>
+                <td colSpan={7} className="p-8 text-center text-muted-foreground">
+                  <Loader2 className="w-6 h-6 animate-spin mx-auto mb-2" />
+                  {s.loadingText}
+                </td>
+              </tr>
             )}
-            {filtered.map((r) => (
-              <tr key={r.id} className="border-t border-border">
-                <td className="p-3 font-mono text-xs">{r.id.slice(0, 8)}…</td>
-                <td className="p-3">{r.parent_name}</td>
-                <td className="p-3">{r.parent_email}</td>
-                <td className="p-3">{r.gender}</td>
-                <td className="p-3">{r.score}/{r.total}</td>
-                <td className="p-3 whitespace-nowrap">{new Date(r.submitted_at).toLocaleString()}</td>
+            
+            {!loading && filtered.length === 0 && (
+              <tr>
+                <td colSpan={7} className="p-8 text-center text-muted-foreground">
+                  {s.noSubmissions}
+                </td>
+              </tr>
+            )}
+            
+            {!loading && filtered.map((r, index) => (
+              <tr key={r.id} className="border-t border-border hover:bg-muted/20 transition-colors">
+                <td className="p-3 text-center text-muted-foreground">{index + 1}</td>
+                <td className="p-3 font-medium">{r.parent_name}</td>
+                <td className="p-3 text-muted-foreground">{r.parent_email}</td>
+                <td className="p-3">{getGenderLabel(r.gender)}</td>
+                <td className="p-3 whitespace-nowrap text-muted-foreground">
+                  {new Date(r.submitted_at).toLocaleDateString()}
+                  <br />
+                  <span className="text-xs">
+                    {new Date(r.submitted_at).toLocaleTimeString()}
+                  </span>
+                </td>
                 <td className="p-3">
                   <Button asChild size="sm" variant="outline" className="gap-1.5">
-                    <Link to={`/admin/survey/${r.id}`}><Eye className="w-3.5 h-3.5" /> {s.view}</Link>
+                    <Link to={`/admin/survey/${r.id}`}>
+                      <Eye className="w-3.5 h-3.5" /> {s.view}
+                    </Link>
+                  </Button>
+                </td>
+                <td className="p-3 text-center">
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    className="gap-1.5 hover:bg-destructive/90"
+                    onClick={() => openDeleteDialog(r.id)}
+                    disabled={deletingId === r.id}
+                  >
+                    {deletingId === r.id ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    ) : (
+                      <Trash2 className="w-3.5 h-3.5" />
+                    )}
+                    {deletingId === r.id ? 'Deleting...' : 'Delete'}
                   </Button>
                 </td>
               </tr>
@@ -134,6 +270,34 @@ const AdminDashboard = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent className="bg-card border-border max-w-md">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-foreground">Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription className="text-muted-foreground">
+              This will permanently delete this survey submission. 
+              This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="gap-2">
+            <AlertDialogCancel className="bg-secondary hover:bg-secondary/80">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (selectedDeleteId) {
+                  handleDelete(selectedDeleteId);
+                }
+              }}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Delete Survey
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

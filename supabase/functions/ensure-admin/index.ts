@@ -42,7 +42,7 @@ Deno.serve(async (req) => {
       .upsert({ user_id: user.id, role: 'admin' }, { onConflict: 'user_id,role' });
     if (roleErr) throw roleErr;
 
-    return new Response(JSON.stringify({ ok: true }), {
+    return new Response(JSON.stringify({ ok: true, user: user.email }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (e) {

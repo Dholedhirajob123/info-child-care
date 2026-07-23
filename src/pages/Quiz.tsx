@@ -126,11 +126,11 @@ const Quiz = () => {
           <Button size="lg" className="gap-2" onClick={() => setModalOpen(true)}>
             <Play className="w-4 h-4" /> {s.startQuizBtn}
           </Button>
-          <div className="mt-6">
+          {/* <div className="mt-6">
             <Button variant="outline" size="sm" onClick={() => navigate('/admin/login')}>
               {s.adminLoginBtn}
             </Button>
-          </div>
+          </div> */}
         </div>
         <ParentInfoModal open={modalOpen} onOpenChange={setModalOpen} onStart={(info) => { setParentInfo(info); setModalOpen(false); }} />
       </div>
@@ -146,11 +146,11 @@ const Quiz = () => {
         </div>
         <h1 className="text-title text-foreground mb-2">{s.thankYou}</h1>
         <p className="text-muted-foreground mb-6">{s.thankYouMsg}</p>
-        {surveyId && (
+        {/* {surveyId && (
           <p className="text-xs text-muted-foreground mb-6">
             {s.surveyIdLabel}: <span className="font-mono">{surveyId}</span>
           </p>
-        )}
+        )} */}
         <div className="flex flex-col gap-3">
           <Button onClick={handleRestart}>{s.submitAnother}</Button>
           <Button variant="outline" onClick={() => navigate('/topics')}>{t.exploreTopics}</Button>
