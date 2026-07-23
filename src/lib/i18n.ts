@@ -132,7 +132,7 @@ export const translations: Record<Language, TranslationKeys> = {
     
     welcome: 'Welcome to Info Child',
     welcomeSubtitle: 'Your trusted guide for scientific child nutrition and baby care',
-    Presentedby: 'Shital N Nawghare',
+    Presentedby: 'Shital N Navghare',
     exploreTopics: 'Explore Topics',
     installApp: 'Install App',
     keyBenefits: 'Key Benefits',

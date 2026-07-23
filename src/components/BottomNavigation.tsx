@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Activity, Syringe, Lightbulb, HelpCircle } from 'lucide-react';
+import { Home, BookOpen, Activity, Syringe, Lightbulb, HelpCircle, Mail, Phone } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
@@ -18,6 +18,7 @@ export const BottomNavigation = () => {
 
   return (
     <nav className="bottom-nav z-50">
+      {/* Navigation Items */}
       <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path || 
@@ -50,6 +51,56 @@ export const BottomNavigation = () => {
             </NavLink>
           );
         })}
+      </div>
+
+      {/* Stylish Footer Section */}
+      <div className="border-t-2 border-primary/20 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
+        <div className="max-w-lg mx-auto px-4 py-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+            {/* Company Name */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-medium text-muted-foreground">Created by</span>
+              <span className="text-sm font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                DGD
+              </span>
+            </div>
+
+            {/* Separator */}
+            <span className="hidden sm:block text-muted-foreground/30">|</span>
+
+            {/* Phone */}
+            <div className="flex items-center gap-1.5">
+              <Phone className="w-3.5 h-3.5 text-primary/70" />
+              <a 
+                href="tel:7218298534" 
+                className="text-xs text-muted-foreground hover:text-primary transition-colors"
+              >
+                7218298534
+              </a>
+            </div>
+
+            {/* Separator */}
+            <span className="hidden sm:block text-muted-foreground/30">|</span>
+
+            {/* Email */}
+            <div className="flex items-center gap-1.5">
+              <Mail className="w-3.5 h-3.5 text-primary/70" />
+              <a 
+                href="mailto:developerdgd@gmail.com" 
+                className="text-xs text-muted-foreground hover:text-primary transition-colors"
+              >
+                developerdgd@gmail.com
+              </a>
+            </div>
+          </div>
+
+          {/* Copyright */}
+          <div className="text-center mt-1.5">
+            <p className="text-[10px] text-muted-foreground/50">
+              © {new Date().getFullYear()} DGD. All rights reserved.
+            </p>
+          </div>
+        </div>
       </div>
     </nav>
   );
