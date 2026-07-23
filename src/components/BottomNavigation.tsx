@@ -53,49 +53,46 @@ export const BottomNavigation = () => {
         })}
       </div>
 
-      {/* Stylish Footer Section */}
+      {/* Stylish Footer Section - One line on mobile */}
       <div className="border-t-2 border-primary/20 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5">
-        <div className="max-w-lg mx-auto px-4 py-3">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-            {/* Company Name */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs font-medium text-muted-foreground">Created by</span>
-              <span className="text-sm font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        <div className="max-w-lg mx-auto px-3 py-2.5">
+          {/* One line layout for both mobile and desktop */}
+          <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            {/* Created by DGD */}
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] sm:text-xs font-medium text-muted-foreground">Created by</span>
+              <span className="text-[12px] sm:text-sm font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 DGD
               </span>
             </div>
 
-            {/* Separator */}
-            <span className="hidden sm:block text-muted-foreground/30">|</span>
+            {/* Separator - visible on all screens */}
+            <span className="text-muted-foreground/30 text-xs">|</span>
 
             {/* Phone */}
-            <div className="flex items-center gap-1.5">
-              <Phone className="w-3.5 h-3.5 text-primary/70" />
-              <a 
-                href="tel:7218298534" 
-                className="text-xs text-muted-foreground hover:text-primary transition-colors"
-              >
-                7218298534
-              </a>
-            </div>
+            <a 
+              href="tel:7218298534" 
+              className="flex items-center gap-1 text-[10px] sm:text-xs text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary/60" />
+              <span className="font-bold">7218298534</span>
+            </a>
 
-            {/* Separator */}
-            <span className="hidden sm:block text-muted-foreground/30">|</span>
+            {/* Separator - hidden on mobile, visible on desktop */}
+            <span className="hidden sm:inline text-muted-foreground/30 text-xs">|</span>
 
-            {/* Email */}
-            <div className="flex items-center gap-1.5">
-              <Mail className="w-3.5 h-3.5 text-primary/70" />
-              <a 
-                href="mailto:developerdgd@gmail.com" 
-                className="text-xs text-muted-foreground hover:text-primary transition-colors"
-              >
-                developerdgd@gmail.com
-              </a>
-            </div>
+            {/* Email - hidden on mobile, visible on desktop */}
+            <a 
+              href="mailto:developerdgd@gmail.com" 
+              className="hidden sm:flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Mail className="w-3.5 h-3.5 text-primary/60" />
+              developerdgd@gmail.com
+            </a>
           </div>
 
-          {/* Copyright */}
-          <div className="text-center mt-1.5">
+          {/* Copyright - Only show on desktop */}
+          <div className="hidden sm:block text-center mt-1">
             <p className="text-[10px] text-muted-foreground/50">
               © {new Date().getFullYear()} DGD. All rights reserved.
             </p>
